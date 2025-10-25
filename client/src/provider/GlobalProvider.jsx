@@ -132,11 +132,13 @@ const GlobalProvider = ({children}) => {
     }
 
     useEffect(()=>{
-      fetchCartItem()
-      handleLogoutOut()
-      fetchAddress()
-      fetchOrder()
-    },[user])
+      // Only attempt fetching user-specific resources when logged in
+      if(user?._id){
+        fetchCartItem()
+        fetchAddress()
+        fetchOrder()
+      }
+    },[user?._id])
     
     return(
         <GlobalContext.Provider value={{

@@ -294,11 +294,12 @@ export async function forgotPasswordController(request,response) {
         }
 
         const otp = generatedOtp()
-        const expireTime = new Date() + 60 * 60 * 1000 // 1hr
+        const expireTime = Date.now() + 60 * 60 * 1000 // 1hr in ms
 
-        const update = await UserModel.findByIdAndUpdate(user._id,{
+        await UserModel.findByIdAndUpdate(user._id,{
             forgot_password_otp : otp,
-            forgot_password_expiry : new Date(expireTime).toISOString()
+            // store as Date object
+            forgot_password_expiry : new Date(expireTime)
         })
 
         await sendEmail({
@@ -348,9 +349,10 @@ export async function verifyForgotPasswordOtp(request,response){
             })
         }
 
-        const currentTime = new Date().toISOString()
+        const now = new Date()
+        const expiry = new Date(user.forgot_password_expiry)
 
-        if(user.forgot_password_expiry < currentTime  ){
+        if(expiry < now  ){
             return response.status(400).json({
                 message : "Otp is expired",
                 error : true,
@@ -369,7 +371,7 @@ export async function verifyForgotPasswordOtp(request,response){
         //if otp is not expired
         //otp === user.forgot_password_otp
 
-        const updateUser = await UserModel.findByIdAndUpdate(user?._id,{
+        await UserModel.findByIdAndUpdate(user?._id,{
             forgot_password_otp : "",
             forgot_password_expiry : ""
         })
@@ -464,7 +466,7 @@ export async function refreshToken(request,response){
             })
         }
 
-        const userId = verifyToken?._id
+    const userId = verifyToken?.id
 
         const newAccessToken = await generatedAccessToken(userId)
 
