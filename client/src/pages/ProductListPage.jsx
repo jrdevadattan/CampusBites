@@ -81,7 +81,7 @@ const ProductListPage = () => {
             DisplaySubCatory.map((s, index) => {
                const link = `/${valideURLConvert(s?.category[0]?.name)}-${s?.category[0]?._id}/${valideURLConvert(s.name)}-${s._id}`
               return (
-                <Link to={link} className={`w-full p-2 lg:flex items-center lg:w-full lg:h-16 box-border lg:gap-4 border-b 
+                <Link key={s?._id || index} to={link} className={`w-full p-2 lg:flex items-center lg:w-full lg:h-16 box-border lg:gap-4 border-b 
                   hover:bg-primary-100/20 cursor-pointer
                   ${subCategoryId === s._id ? "bg-primary-100/20" : ""}
                 `}
