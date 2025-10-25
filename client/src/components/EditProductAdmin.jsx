@@ -256,7 +256,7 @@ const EditProductAdmin = ({ close ,data : propsData,fetchProductData}) => {
                     {
                       allCategory.map((c, index) => {
                         return (
-                          <option value={c?._id}>{c.name}</option>
+                          <option key={c?._id || index} value={c?._id}>{c.name}</option>
                         )
                       })
                     }
@@ -300,7 +300,7 @@ const EditProductAdmin = ({ close ,data : propsData,fetchProductData}) => {
                     {
                       allSubCategory.map((c, index) => {
                         return (
-                          <option value={c?._id}>{c.name}</option>
+                          <option key={c?._id || index} value={c?._id}>{c.name}</option>
                         )
                       })
                     }
