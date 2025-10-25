@@ -88,12 +88,16 @@ const Header = () => {
                                 </div>
 
 
-                                {/**login and my cart */}
-                                <div className=''>
+                                {/**login, theme toggle and my cart */}
+                                <div className='flex items-center gap-3'>
                                     {/**user icons display in only mobile version**/}
                                     <button className='text-neutral-600 lg:hidden' onClick={handleMobileUser}>
                                         <FaRegCircleUser size={26}/>
                                     </button>
+                                    {/** Theme toggle visible on mobile too */}
+                                    <div className='lg:hidden'>
+                                        <ThemeToggle />
+                                    </div>
 
                                       {/**Desktop**/}
                                     <div className='hidden lg:flex  items-center gap-6'>
