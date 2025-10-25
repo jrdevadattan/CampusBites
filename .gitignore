@@ -1,0 +1,35 @@
+## Node
+node_modules/
+
+## Env files (do NOT commit secrets)
+.env
+.env.*
+server/.env
+client/.env
+
+## Build outputs
+/dist
+/build
+/client/dist
+
+## Vercel
+.vercel/
+vercel.json
+
+## Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+## OS files
+.DS_Store
+Thumbs.db
+
+## IDE
+.vscode/
+.idea/
+
+## Misc
+*.pem
+*.key
+*.crt
