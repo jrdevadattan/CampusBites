@@ -76,7 +76,7 @@ const ProductListPage = () => {
     <section className='sticky top-24 lg:top-20'>
       <div className='container sticky top-24  mx-auto grid grid-cols-[90px,1fr]  md:grid-cols-[200px,1fr] lg:grid-cols-[280px,1fr]'>
         {/**sub category **/}
-        <div className=' min-h-[88vh] max-h-[88vh] overflow-y-scroll  grid gap-2 shadow-md scrollbarCustom bg-white dark:bg-neutral-900 py-2'>
+        <div className=' min-h-[88vh] max-h-[88vh] overflow-y-scroll  grid gap-3 shadow-md scrollbarCustom bg-white dark:bg-neutral-900 py-2'>
           {
             DisplaySubCatory.map((s, index) => {
                const link = `/${valideURLConvert(s?.category[0]?.name)}-${s?.category[0]?._id}/${valideURLConvert(s.name)}-${s._id}`
