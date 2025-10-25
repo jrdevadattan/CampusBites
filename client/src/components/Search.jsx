@@ -77,7 +77,7 @@ const Search = () => {
                             placeholder='chips, kurkures, drinks, cola cola, too yum, tede mede'
                             autoFocus
                             defaultValue={searchText}
-                            className='bg-transparent dark:text-white dark:placeholder-neutral-400 w-full h-full outline-none'
+                            className='bg-transparent dark:text-white dark:placeholder-neutral-400 w-full h-full outline-none focus:ring-0 focus:border-0'
                             onChange={handleOnChange}
                         />
                     </div>
