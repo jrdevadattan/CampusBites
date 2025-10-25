@@ -30,7 +30,7 @@ const productSchema = new mongoose.Schema({
     },
     price : {
         type : Number,
-        defualt : null
+        default : null
     },
     discount : {
         type : Number,
@@ -52,14 +52,14 @@ const productSchema = new mongoose.Schema({
     timestamps : true
 })
 
-//create a text index
-productSchema.index({
-    name  : "text",
-    description : 'text'
-},{
-    name : 10,
-    description : 5
-})
+// Ensure autoIndex is enabled so Mongoose builds indexes in dev/local
+productSchema.set('autoIndex', true)
+
+// Create a proper text index with weights for name and description
+productSchema.index(
+    { name: 'text', description: 'text' },
+    { weights: { name: 10, description: 5 }, name: 'ProductTextIndex' }
+)
 
 
 const ProductModel = mongoose.model('product',productSchema)
