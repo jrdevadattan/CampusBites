@@ -52,24 +52,17 @@ const Search = () => {
                      <div onClick={redirectToSearchPage} className='w-full h-full flex items-center'>
                         <TypeAnimation
                                 sequence={[
-                                    // Same substring at the start will only be typed out once, initially
-                                    'Search "milk"',
-                                    1000, // wait 1s before replacing "Mice" with "Hamsters"
-                                    'Search "bread"',
-                                    1000,
-                                    'Search "sugar"',
-                                    1000,
-                                    'Search "panner"',
-                                    1000,
-                                    'Search "chocolate"',
-                                    1000,
-                                    'Search "curd"',
-                                    1000,
-                                    'Search "rice"',
-                                    1000,
-                                    'Search "egg"',
-                                    1000,
                                     'Search "chips"',
+                                    1000,
+                                    'Search "kurkures"',
+                                    1000,
+                                    'Search "drinks"',
+                                    1000,
+                                    'Search "cola cola"',
+                                    1000,
+                                    'Search "too yum"',
+                                    1000,
+                                    'Search "tede mede"',
                                 ]}
                                 wrapper="span"
                                 speed={50}
@@ -81,7 +74,7 @@ const Search = () => {
                     <div className='w-full h-full'>
                         <input
                             type='text'
-                            placeholder='Search for atta dal and more.'
+                            placeholder='chips, kurkures, drinks, cola cola, too yum, tede mede'
                             autoFocus
                             defaultValue={searchText}
                             className='bg-transparent w-full h-full outline-none'

@@ -10,9 +10,11 @@ html{
 
 body{
     font-family: "Poppins", sans-serif;
-    font-weight: 100;
+    /* Improve legibility with a standard font weight */
+    font-weight: 400;
     font-style: normal;
-    @apply bg-blue-50 text-neutral-700 scroll-smooth
+    /* Darker base text for better contrast */
+    @apply bg-blue-50 text-neutral-900 scroll-smooth
 }
 
 .scrollbar-none::-webkit-scrollbar{

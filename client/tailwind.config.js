@@ -7,10 +7,12 @@ export default {
   theme: {
     extend: {
       colors : {
-        "primary-200" : "#ffbf00",
-        "primary-100" : "#ffc929",
-        "secondary-200" : "#00b050",
-        "secondary-100" : "#0b1a78"
+        // Brand orange palette inspired by provided assets
+        "primary-200" : "#F15A24", // deep orange
+        "primary-100" : "#FF7A45", // light orange for hovers
+        // Optional complementary accents (unused mostly)
+        "secondary-200" : "#1F2937",
+        "secondary-100" : "#374151"
       }
     },
   },

@@ -126,14 +126,14 @@ const ProductDisplayPage = () => {
 
 
         <div className='p-4 lg:pl-7 text-base lg:text-lg'>
-            <p className='bg-green-300 w-fit px-2 rounded-full'>10 Min</p>
+            <p className='bg-primary-100/30 text-primary-200 w-fit px-2 rounded-full'>10 Min</p>
             <h2 className='text-lg font-semibold lg:text-3xl'>{data.name}</h2>  
             <p className=''>{data.unit}</p> 
             <Divider/>
             <div>
               <p className=''>Price</p> 
               <div className='flex items-center gap-2 lg:gap-4'>
-                <div className='border border-green-600 px-4 py-2 rounded bg-green-50 w-fit'>
+                <div className='border border-primary-200 px-4 py-2 rounded bg-primary-100/10 w-fit'>
                     <p className='font-semibold text-lg lg:text-xl'>{DisplayPriceInRupees(pricewithDiscount(data.price,data.discount))}</p>
                 </div>
                 {
@@ -143,7 +143,7 @@ const ProductDisplayPage = () => {
                 }
                 {
                   data.discount && (
-                    <p className="font-bold text-green-600 lg:text-2xl">{data.discount}% <span className='text-base text-neutral-500'>Discount</span></p>
+                    <p className="font-bold text-primary-200 lg:text-2xl">{data.discount}% <span className='text-base text-neutral-500'>Discount</span></p>
                   )
                 }
                 
