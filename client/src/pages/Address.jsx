@@ -47,22 +47,22 @@ const Address = () => {
               {
                 addressList.map((address,index)=>{
                   return(
-                      <div className={`border rounded p-3 flex gap-3 bg-white ${!address.status && 'hidden'}`}>
+                      <div key={address?._id || `addr-${index}`} className={`border rounded p-3 flex gap-3 bg-white ${!address.status && 'hidden'}`}>
                           <div className='w-full'>
                             <p><strong>Hostel:</strong> {address.hostelName}</p>
                             <p><strong>Room:</strong> {address.roomNumber}</p>
                             <p><strong>Mobile:</strong> {address.mobile}</p>
                           </div>
-                          <div className=' grid gap-10'>
+                          <div className=' grid gap-2'>
                             <button onClick={()=>{
                               setOpenEdit(true)
                               setEditData(address)
-                            }} className='bg-green-200 p-1 rounded  hover:text-white hover:bg-green-600'>
+                            }} className='p-2 rounded-md bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-900/40 dark:hover:bg-green-800/60 dark:text-green-400'>
                               <MdEdit/>
                             </button>
                             <button onClick={()=>
                               handleDisableAddress(address._id)
-                            } className='bg-red-200 p-1 rounded hover:text-white hover:bg-red-600'>
+                            } className='p-2 rounded-md bg-red-100 hover:bg-red-200 text-red-600 dark:bg-red-900/40 dark:hover:bg-red-800/60 dark:text-red-400'>
                               <MdDelete size={20}/>  
                             </button>
                           </div>

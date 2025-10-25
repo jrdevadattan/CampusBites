@@ -76,24 +76,24 @@ const ProductListPage = () => {
     <section className='sticky top-24 lg:top-20'>
       <div className='container sticky top-24  mx-auto grid grid-cols-[90px,1fr]  md:grid-cols-[200px,1fr] lg:grid-cols-[280px,1fr]'>
         {/**sub category **/}
-        <div className=' min-h-[88vh] max-h-[88vh] overflow-y-scroll  grid gap-1 shadow-md scrollbarCustom bg-white dark:bg-neutral-900 py-2'>
+        <div className=' min-h-[88vh] max-h-[88vh] overflow-y-scroll grid gap-1 lg:flex lg:flex-col shadow-md scrollbarCustom bg-white dark:bg-neutral-900 py-2'>
           {
             DisplaySubCatory.map((s, index) => {
                const link = `/${valideURLConvert(s?.category[0]?.name)}-${s?.category[0]?._id}/${valideURLConvert(s.name)}-${s._id}`
               return (
-                <Link key={s?._id || index} to={link} className={`w-full p-2 lg:flex items-center lg:w-full lg:h-16 box-border lg:gap-4 border-b dark:border-neutral-700
+                <Link key={s?._id || index} to={link} className={`w-full px-2 flex flex-col lg:flex-row items-center lg:w-full lg:h-16 box-border gap-1 lg:gap-3 border-b border-neutral-200 dark:border-neutral-800
                   hover:bg-primary-100/20 dark:hover:bg-primary-100/10 cursor-pointer dark:text-white
                   ${subCategoryId === s._id ? "bg-primary-100/20 dark:bg-primary-100/10" : ""}
                 `}
                 >
-                  <div className='w-fit max-w-28 mx-auto lg:mx-0 bg-white dark:bg-neutral-800 rounded  box-border' >
+                  <div className='w-fit max-w-28 lg:max-w-none lg:mx-0 bg-white dark:bg-neutral-800 rounded box-border' >
                     <img
                       src={s.image}
                       alt='subCategory'
-                      className=' w-14 lg:h-14 lg:w-12 h-full object-scale-down'
+                      className='w-12 h-12 lg:h-12 lg:w-12 object-scale-down'
                     />
                   </div>
-                  <p className='-mt-6 lg:mt-0 text-xs text-center lg:text-left lg:text-base'>{s.name}</p>
+                  <p className='text-xs text-center lg:text-left lg:text-base'>{s.name}</p>
                 </Link>
               )
             })

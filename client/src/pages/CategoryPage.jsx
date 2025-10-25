@@ -73,9 +73,9 @@ const CategoryPage = () => {
 
   return (
     <section className=''>
-        <div className='p-2   bg-white shadow-md flex items-center justify-between'>
-            <h2 className='font-semibold'>Category</h2>
-            <button onClick={()=>setOpenUploadCategory(true)} className='text-sm border border-primary-200 hover:bg-primary-200 px-3 py-1 rounded'>Add Category</button>
+        <div className='p-2 bg-white dark:bg-neutral-900 shadow-md flex items-center justify-between'>
+            <h2 className='font-semibold dark:text-white'>Category</h2>
+            <button onClick={()=>setOpenUploadCategory(true)} className='text-sm border border-primary-200 hover:bg-primary-200 dark:hover:bg-primary-200 dark:text-white px-3 py-1 rounded'>Add Category</button>
         </div>
         {
             !categoryData[0] && !loading && (
@@ -87,23 +87,23 @@ const CategoryPage = () => {
             {
                 categoryData.map((category,index)=>{
                     return(
-                        <div className='w-32 h-56 rounded shadow-md' key={category._id}>
+                        <div className='w-32 h-56 rounded border-2 border-neutral-200 dark:border-neutral-700 shadow-lg hover:shadow-xl transition-shadow bg-white dark:bg-neutral-900 p-2' key={category._id}>
                             <img 
                                 alt={category.name}
                                 src={category.image}
                                 className='w-full object-scale-down'
                             />
-                            <div className='items-center h-9 flex gap-2'>
+                            <div className='items-center h-9 flex gap-2 justify-center'>
                                 <button onClick={()=>{
                                     setOpenEdit(true)
                                     setEditData(category)
-                                }} className='flex-1 bg-green-100 hover:bg-green-200 text-green-600 font-medium py-1 rounded'>
+                                }} className='flex-1 bg-green-100 hover:bg-green-200 dark:bg-green-900/40 dark:hover:bg-green-800/60 text-green-600 dark:text-green-400 font-medium py-1 rounded'>
                                     Edit
                                 </button>
                                 <button onClick={()=>{
                                     setOpenConfirmBoxDelete(true)
                                     setDeleteCategory(category)
-                                }} className='flex-1 bg-red-100 hover:bg-red-200 text-red-600 font-medium py-1 rounded'>
+                                }} className='flex-1 bg-red-100 hover:bg-red-200 dark:bg-red-900/40 dark:hover:bg-red-800/60 text-red-600 dark:text-red-400 font-medium py-1 rounded'>
                                     Delete
                                 </button>
                             </div>

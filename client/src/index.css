@@ -38,6 +38,25 @@ body{
 .dark .text-gray-500{ @apply text-neutral-400; }
 .dark .text-gray-900{ @apply text-neutral-100; }
 .dark .text-black{ @apply text-neutral-100; }
+.dark .text-gray-700{ @apply text-neutral-200; }
+.dark .text-gray-800{ @apply text-neutral-100; }
+.dark .text-neutral-700{ @apply text-neutral-300; }
+.dark .border-gray-300{ @apply border-neutral-700; }
+.dark .border-slate-200{ @apply border-neutral-700; }
+.dark .border-slate-300{ @apply border-neutral-700; }
+.dark .bg-gray-200{ @apply bg-neutral-800; }
+.dark .bg-slate-200{ @apply bg-neutral-800; }
+
+/* Hover state mappings */
+.dark .hover\:bg-gray-50:hover{ @apply bg-neutral-800; }
+.dark .hover\:bg-gray-100:hover{ @apply bg-neutral-800; }
+.dark .hover\:bg-slate-50:hover{ @apply bg-neutral-800; }
+.dark .hover\:bg-blue-50:hover{ @apply bg-neutral-800; }
+.dark .hover\:text-gray-700:hover{ @apply text-neutral-200; }
+
+/* Tables and lists */
+.dark tr:hover { @apply bg-neutral-800; }
+.dark li:hover { @apply bg-neutral-800; }
 
 .scrollbar-none::-webkit-scrollbar{
     display: none;
@@ -57,14 +76,17 @@ body{
 .dark button:not(.no-dark-hover):hover{ @apply brightness-110; }
 .dark a:hover{ @apply brightness-110; }
 
-/* Form controls: keep background consistent in dark mode and on focus */
+/* Form controls: keep background consistent and accessible in both themes */
 @layer base {
     input, textarea, select {
-        @apply bg-transparent text-inherit placeholder-neutral-500 dark:placeholder-neutral-400;
+        @apply rounded-md border border-gray-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 dark:placeholder-neutral-400;
     }
     input:focus, textarea:focus, select:focus {
-        @apply outline-none ring-1 ring-primary-200/60 dark:ring-primary-100/60;
+        @apply outline-none ring-2 ring-primary-200/30 dark:ring-primary-100/30 border-primary-200 dark:border-primary-100;
     }
+    input:disabled, textarea:disabled, select:disabled { @apply opacity-60 cursor-not-allowed; }
+    button { @apply focus:outline-none focus:ring-2 focus:ring-primary-200/30 dark:focus:ring-primary-100/30; }
+    hr { @apply border-gray-200 dark:border-neutral-800; }
 }
 
 /* Fix Chrome autofill/typing flash (white background) */

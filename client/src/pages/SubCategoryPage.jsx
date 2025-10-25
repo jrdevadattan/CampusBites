@@ -79,7 +79,7 @@ const SubCategoryPage = () => {
             {
               row.original.category.map((c,index)=>{
                 return(
-                  <p key={c._id+"table"} className='shadow-md px-1 inline-block'>{c.name}</p>
+                  <p key={c._id+"table"} className='px-1 inline-block dark:text-white'>{c.name}</p>
                 )
               })
             }
@@ -95,13 +95,13 @@ const SubCategoryPage = () => {
               <button onClick={()=>{
                   setOpenEdit(true)
                   setEditData(row.original)
-              }} className='p-2 bg-green-100 rounded-full hover:text-green-600'>
+              }} className='p-2 bg-green-100 dark:bg-green-900/40 rounded-full text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300'>
                   <HiPencil size={20}/>
               </button>
               <button onClick={()=>{
                 setOpenDeleteConfirmBox(true)
                 setDeleteSubCategory(row.original)
-              }} className='p-2 bg-red-100 rounded-full text-red-500 hover:text-red-600'>
+              }} className='p-2 bg-red-100 dark:bg-red-900/40 rounded-full text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300'>
                   <MdDelete  size={20}/>
               </button>
           </div>
@@ -131,9 +131,9 @@ const SubCategoryPage = () => {
   }
   return (
     <section className=''>
-        <div className='p-2   bg-white shadow-md flex items-center justify-between'>
-            <h2 className='font-semibold'>Sub Category</h2>
-            <button onClick={()=>setOpenAddSubCategory(true)} className='text-sm border border-primary-200 hover:bg-primary-200 px-3 py-1 rounded'>Add Sub Category</button>
+        <div className='p-2 bg-white dark:bg-neutral-900 shadow-md flex items-center justify-between'>
+            <h2 className='font-semibold dark:text-white'>Sub Category</h2>
+            <button onClick={()=>setOpenAddSubCategory(true)} className='text-sm border border-primary-200 hover:bg-primary-200 dark:text-white px-3 py-1 rounded'>Add Sub Category</button>
         </div>
 
         <div className='overflow-auto w-full max-w-[95vw]'>

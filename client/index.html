@@ -4,6 +4,17 @@
     <meta charset="UTF-8" />
   <link rel="icon" type="image/x-icon" href="/src/assets/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Avoid theme flash: set initial theme before rendering -->
+    <script>
+      (function() {
+        try {
+          const stored = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const shouldDark = stored ? stored === 'dark' : prefersDark;
+          if (shouldDark) document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
   <title>CampusBites</title>
   </head>
   <body>
