@@ -1,16 +1,11 @@
 {
-    "version" : 2,
-    "name" : "Blinkit",
-    "builds" : [
-        {
-            "src" : "./index.js",
-            "use" : "@vercel/node"
-        }
+    "version": 2,
+    "name": "blinkit-server",
+    "builds": [
+        { "src": "api/index.js", "use": "@vercel/node" }
     ],
-    "routes" : [
-        {
-            "src" : "/(.*)",
-            "dest" : "/"
-        }
+    "routes": [
+        { "src": "/api/(.*)", "dest": "api/index.js" },
+        { "src": "/$", "dest": "api/index.js" }
     ]
-}     
+}
