@@ -16,7 +16,7 @@ const Profile = () => {
     const [userData,setUserData] = useState({
         name : user.name,
         email : user.email,
-        mobile : user.mobile,
+        mobile : user.mobile ?? "",
     })
     const [loading,setLoading] = useState(false)
     const dispatch = useDispatch()
@@ -25,7 +25,7 @@ const Profile = () => {
         setUserData({
             name : user.name,
             email : user.email,
-            mobile : user.mobile,
+            mobile : user.mobile ?? "",
         })
     },[user])
 
@@ -124,7 +124,7 @@ const Profile = () => {
                     id='mobile'
                     placeholder='Enter your mobile' 
                     className='p-2 bg-blue-50 outline-none border focus-within:border-primary-200 rounded'
-                    value={userData.mobile}
+                    value={userData.mobile ?? ""}
                     name='mobile'
                     onChange={handleOnChange}
                     required

@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaCode } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { SiLinktree } from "react-icons/si";
 import { GiBroadsword } from "react-icons/gi";
@@ -12,6 +12,10 @@ const Footer = () => {
               <span>Trademarked by Pankaj Khatana</span>
               <GiBroadsword className="w-5 h-5" />
             </p>
+                        <p className='flex items-center justify-center gap-2 text-sm opacity-90'>
+                            <span>Built by J R Deva Dattan</span>
+                            <FaCode className="w-4 h-4" />
+                        </p>
 
             <div className='flex items-center gap-4 justify-center text-2xl'>
                 <a href='https://github.com/jrdevadattan' target='_blank' rel='noopener noreferrer' className='hover:text-primary-100' aria-label='GitHub'>

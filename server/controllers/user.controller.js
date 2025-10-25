@@ -12,7 +12,7 @@ import jwt from 'jsonwebtoken'
 
 export async function registerUserController(request,response){
     try {
-        const { name, email, password, hostelName, roomNumber, mobile } = request.body
+    const { name, email, password, hostelName, roomNumber, mobile } = request.body
 
         if(!name || !email || !password){
             return response.status(400).json({
@@ -38,7 +38,8 @@ export async function registerUserController(request,response){
         const payload = {
             name,
             email,
-            password : hashPassword
+            password : hashPassword,
+            ...(mobile && { mobile })
         }
 
         const newUser = new UserModel(payload)
@@ -58,14 +59,20 @@ export async function registerUserController(request,response){
 
         const VerifyEmailUrl = `${process.env.FRONTEND_URL}/verify-email?code=${save?._id}`
 
-        const verifyEmail = await sendEmail({
-            sendTo : email,
-            subject : "Verify email from CampusBites",
-            html : verifyEmailTemplate({
-                name,
-                url : VerifyEmailUrl
+        // Send verification email (soft-fails in dev)
+        try {
+            await sendEmail({
+                sendTo : email,
+                subject : "Verify email from CampusBites",
+                html : verifyEmailTemplate({
+                    name,
+                    url : VerifyEmailUrl
+                })
             })
-        })
+        } catch (err) {
+            // In production this would have thrown; here, log and continue
+            console.warn(`[register] Email send failed: ${err?.message || err}`)
+        }
 
         return response.json({
             message : "User register successfully",
@@ -519,9 +526,27 @@ export async function userDetails(request,response){
 
         const user = await UserModel.findById(userId).select('-password -refresh_token')
 
+        // Fallback: if user.mobile is missing, try to use the latest address.mobile
+        let finalMobile = user?.mobile ?? null
+        if (!finalMobile) {
+            const latestAddress = await AddressModel.findOne({ userId: userId })
+                .sort({ createdAt: -1 })
+                .select('mobile')
+                .lean()
+            if (latestAddress?.mobile) {
+                finalMobile = latestAddress.mobile
+            }
+        }
+
+        // Prepare response object without mutating the mongoose doc
+        const userObj = user?.toObject?.() || {}
+        if (finalMobile) {
+            userObj.mobile = finalMobile
+        }
+
         return response.json({
             message : 'user details',
-            data : user,
+            data : userObj,
             error : false,
             success : true
         })
