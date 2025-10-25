@@ -126,15 +126,15 @@ const ProductDisplayPage = () => {
 
 
         <div className='p-4 lg:pl-7 text-base lg:text-lg'>
-            <p className='bg-primary-100/30 text-primary-200 w-fit px-2 rounded-full'>10 Min</p>
+            <p className='bg-green-100 text-green-700 w-fit px-2 rounded-full font-semibold'>10 Min</p>
             <h2 className='text-lg font-semibold lg:text-3xl'>{data.name}</h2>  
             <p className=''>{data.unit}</p> 
             <Divider/>
             <div>
               <p className=''>Price</p> 
               <div className='flex items-center gap-2 lg:gap-4'>
-                <div className='border border-primary-200 px-4 py-2 rounded bg-primary-100/10 w-fit'>
-                    <p className='font-semibold text-lg lg:text-xl'>{DisplayPriceInRupees(pricewithDiscount(data.price,data.discount))}</p>
+                <div className='border border-green-600 px-4 py-2 rounded bg-green-50 w-fit'>
+                    <p className='font-semibold text-lg lg:text-xl text-green-700'>{DisplayPriceInRupees(pricewithDiscount(data.price,data.discount))}</p>
                 </div>
                 {
                   data.discount && (
@@ -143,10 +143,9 @@ const ProductDisplayPage = () => {
                 }
                 {
                   data.discount && (
-                    <p className="font-bold text-primary-200 lg:text-2xl">{data.discount}% <span className='text-base text-neutral-500'>Discount</span></p>
+                    <p className="font-bold text-green-700 lg:text-2xl">{data.discount}% <span className='text-base text-green-700'>Discount</span></p>
                   )
                 }
-                
               </div>
 
             </div> 
@@ -164,7 +163,7 @@ const ProductDisplayPage = () => {
               }
            
 
-            <h2 className='font-semibold'>Why shop from binkeyit? </h2>
+            <h2 className='font-semibold'>Why shop from CampusBites? </h2>
             <div>
                   <div className='flex  items-center gap-4 my-4'>
                       <img
@@ -174,7 +173,7 @@ const ProductDisplayPage = () => {
                       />
                       <div className='text-sm'>
                         <div className='font-semibold'>Superfast Delivery</div>
-                        <p>Get your orer delivered to your doorstep at the earliest from dark stores near you.</p>
+                        <p>Get your order delivered to your doorstep at the earliest from dark stores near you.</p>
                       </div>
                   </div>
                   <div className='flex  items-center gap-4 my-4'>
@@ -185,18 +184,7 @@ const ProductDisplayPage = () => {
                       />
                       <div className='text-sm'>
                         <div className='font-semibold'>Best Prices & Offers</div>
-                        <p>Best price destination with offers directly from the nanufacturers.</p>
-                      </div>
-                  </div>
-                  <div className='flex  items-center gap-4 my-4'>
-                      <img
-                        src={image3}
-                        alt='Wide Assortment'
-                        className='w-20 h-20'
-                      />
-                      <div className='text-sm'>
-                        <div className='font-semibold'>Wide Assortment</div>
-                        <p>Choose from 5000+ products across food personal care, household & other categories.</p>
+                        <p>Best price destination with offers directly from the manufacturers.</p>
                       </div>
                   </div>
             </div>
