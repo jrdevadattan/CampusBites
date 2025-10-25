@@ -5,14 +5,15 @@ import { SiLinktree } from "react-icons/si";
 import { GiBroadsword } from "react-icons/gi";
 
 const Footer = () => {
-  return (
-    <footer className='border-t'>
-        <div className='container mx-auto p-4 text-center flex flex-col lg:flex-row lg:justify-between gap-2'>
+    return (
+        <footer className='border-t mt-6 sm:mt-10'>
+                <div className='container mx-auto px-4 py-6 text-center flex flex-col lg:flex-row lg:justify-between gap-2'>
             <p className='flex items-center justify-center gap-2'>
               <span>Trademarked by Pankaj Khatana</span>
               <GiBroadsword className="w-5 h-5" />
             </p>
-                        <p className='flex items-center justify-center gap-2 text-sm opacity-90'>
+                        {/** Hidden on mobile; visible from md and up */}
+                        <p className='hidden md:flex items-center justify-center gap-2 text-sm opacity-90'>
                             <span>Built by J R Deva Dattan</span>
                             <FaCode className="w-4 h-4" />
                         </p>
@@ -31,7 +32,7 @@ const Footer = () => {
                     <FaXTwitter/>
                 </a>
             </div>
-        </div>
+                </div>
     </footer>
   )
 }
