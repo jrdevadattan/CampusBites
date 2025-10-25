@@ -138,24 +138,29 @@ const AdminOrders = () => {
           const addr = o.delivery_address || {}
           const prod = o.product_details || {}
           return (
-            <div key={o._id} className='border rounded p-2 bg-white shadow-sm'>
-              <div className='flex justify-between items-center mb-1'>
-                <span className='font-semibold'>{prod.name || '—'}</span>
+            <div key={o._id} className='border rounded-lg p-3 bg-white shadow-md flex flex-col gap-2'>
+              <div className='flex justify-between items-center'>
+                <span className='font-semibold text-base'>{prod.name || '—'}</span>
                 <span className='text-xs text-neutral-500'>{d.toLocaleString()}</span>
               </div>
-              <div className='text-xs mb-1'>Order ID: {o.orderId}</div>
-              <div className='text-xs mb-1'>Customer: {customer.name || '—'} ({customer.email || '—'})</div>
-              <div className='text-xs mb-1'>Contact: {customer.mobile || addr.mobile || '—'}</div>
-              <div className='text-xs mb-1'>Hostel: {addr.hostelName || '—'}, Room: {addr.roomNumber || '—'}</div>
-              <div className='text-xs mb-1'>Qty: {Number(o.quantity || 1)}</div>
-              <div className='text-xs mb-1'>Total: ₹{Number(o.totalAmt || 0).toFixed(2)}</div>
-              <div className='text-xs mb-1'>Payment: {o.payment_status || '—'}</div>
+              <div className='flex flex-wrap gap-2 text-xs'>
+                <span className='block'>Order ID: <span className='font-medium'>{o.orderId}</span></span>
+                <span className='block'>Qty: <span className='font-medium'>{Number(o.quantity || 1)}</span></span>
+                <span className='block'>Total: <span className='font-medium'>₹{Number(o.totalAmt || 0).toFixed(2)}</span></span>
+              </div>
+              <div className='flex flex-col gap-1 text-xs'>
+                <span>Customer: <span className='font-medium'>{customer.name || '—'}</span></span>
+                <span>Email: <span className='font-medium'>{customer.email || '—'}</span></span>
+                <span>Contact: <span className='font-medium'>{customer.mobile || addr.mobile || '—'}</span></span>
+                <span>Hostel: <span className='font-medium'>{addr.hostelName || '—'}</span>, Room: <span className='font-medium'>{addr.roomNumber || '—'}</span></span>
+                <span>Payment: <span className='font-medium'>{o.payment_status || '—'}</span></span>
+              </div>
               <div className='mt-2'>
                 {o.delivered ? (
-                  <span className='inline-block px-2 py-1 rounded bg-green-100 text-green-700 text-xs'>Delivered</span>
+                  <span className='inline-block px-2 py-1 rounded bg-green-100 text-green-700 text-xs font-semibold'>Delivered</span>
                 ) : (
                   <button
-                    className='px-2 py-1 rounded bg-blue-600 text-white text-xs hover:bg-blue-700 disabled:opacity-60'
+                    className='px-2 py-1 rounded bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 disabled:opacity-60 w-full'
                     disabled={updating}
                     onClick={() => handleDelivered(o._id)}
                   >
