@@ -126,7 +126,6 @@ const ProductDisplayPage = () => {
 
 
         <div className='p-4 lg:pl-7 text-base lg:text-lg'>
-            <p className='bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 w-fit px-2 rounded-full font-semibold'>10 Min</p>
             <h2 className='text-lg font-semibold lg:text-3xl'>{data.name}</h2>  
             <p className=''>{data.unit}</p> 
             <Divider/>
