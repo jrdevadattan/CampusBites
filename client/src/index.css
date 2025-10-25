@@ -22,6 +22,9 @@ body{
     @apply bg-neutral-950 text-neutral-100;
 }
 
+/* Let the browser know we prefer dark native controls in dark mode */
+.dark { color-scheme: dark; }
+
 /* Map common light surfaces to dark equivalents without touching every component */
 .dark .bg-white{ @apply bg-neutral-900; }
 .dark .bg-blue-50{ @apply bg-neutral-900; }
@@ -43,3 +46,30 @@ body{
 }
 .dark .scrollbarCustom::-webkit-scrollbar{ @apply bg-neutral-800; }
 .dark .scrollbarCustom::-webkit-scrollbar-thumb{ @apply bg-neutral-600; }
+
+/* Form controls: keep background consistent in dark mode and on focus */
+@layer base {
+    input, textarea, select {
+        @apply bg-transparent text-inherit placeholder-neutral-500 dark:placeholder-neutral-400;
+    }
+    input:focus, textarea:focus, select:focus {
+        @apply outline-none ring-1 ring-primary-200/60 dark:ring-primary-100/60;
+    }
+}
+
+/* Fix Chrome autofill/typing flash (white background) */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    transition: background-color 9999s ease-in-out 0s !important;
+    -webkit-text-fill-color: inherit !important;
+}
+
+.dark input:-webkit-autofill,
+.dark textarea:-webkit-autofill,
+.dark select:-webkit-autofill {
+    /* neutral-950 background */
+    -webkit-box-shadow: 0 0 0px 1000px #0a0a0a inset !important;
+    -webkit-text-fill-color: #e5e7eb !important; /* text-neutral-200 */
+}
