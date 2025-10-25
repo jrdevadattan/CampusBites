@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "validate": "node validate-env.js"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +24,7 @@
     "mongoose": "^8.5.2",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
+    "node-fetch": "^3.3.2",
     "nodemon": "^3.1.4",
     "resend": "^3.5.0",
     "stripe": "^16.12.0"

@@ -3,35 +3,62 @@ import ProductModel from "../models/product.model.js";
 export const createProductController = async(request,response)=>{
     try {
         const { 
-            name ,
-            image ,
-            category,
-            subCategory,
+            name,
+            image = [],
+            category = [],
+            subCategory = [],
             unit,
             stock,
             price,
             discount,
             description,
             more_details,
-        } = request.body 
+        } = request.body
 
-        if(!name || !image[0] || !category[0] || !subCategory[0] || !unit || !price || !description ){
-            return response.status(400).json({
-                message : "Enter required fields",
-                error : true,
-                success : false
-            })
+        // Normalize incoming arrays to ObjectId strings (accept either ids or populated objects)
+        const toIdArray = (arr)=> Array.isArray(arr)
+            ? arr.map(v => (typeof v === 'string' ? v : v?._id || v)).filter(Boolean)
+            : []
+
+        const categoryIds = toIdArray(category)
+        const subCategoryIds = toIdArray(subCategory)
+
+        // Coerce numeric values
+        const stockNum = stock === undefined || stock === null || stock === '' ? null : Number(stock)
+        const priceNum = price === undefined || price === null || price === '' ? null : Number(price)
+        const discountNum = discount === undefined || discount === null || discount === '' ? null : Number(discount)
+
+        if(!name){
+            return response.status(400).json({ message: "Product name is required", error: true, success: false })
+        }
+        if(!image?.[0]){
+            return response.status(400).json({ message: "At least one image is required", error: true, success: false })
+        }
+        if(!categoryIds[0]){
+            return response.status(400).json({ message: "Select at least one category", error: true, success: false })
+        }
+        if(!subCategoryIds[0]){
+            return response.status(400).json({ message: "Select at least one subcategory", error: true, success: false })
+        }
+        if(!unit){
+            return response.status(400).json({ message: "Unit is required", error: true, success: false })
+        }
+        if(priceNum === null || Number.isNaN(priceNum)){
+            return response.status(400).json({ message: "Valid price is required", error: true, success: false })
+        }
+        if(!description){
+            return response.status(400).json({ message: "Description is required", error: true, success: false })
         }
 
         const product = new ProductModel({
-            name ,
-            image ,
-            category,
-            subCategory,
+            name,
+            image,
+            category: categoryIds,
+            subCategory: subCategoryIds,
             unit,
-            stock,
-            price,
-            discount,
+            stock: stockNum,
+            price: priceNum,
+            discount: discountNum,
             description,
             more_details,
         })

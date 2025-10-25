@@ -113,10 +113,22 @@ const UploadProduct = () => {
     e.preventDefault()
     console.log("data",data)
 
+    // Prepare payload in the shape the API expects
+    const payload = {
+      ...data,
+      // API expects arrays of ObjectIds, not full objects
+      category: Array.isArray(data.category) ? data.category.map(c => c?._id || c) : [],
+      subCategory: Array.isArray(data.subCategory) ? data.subCategory.map(sc => sc?._id || sc) : [],
+      // Ensure numeric fields are numbers
+      stock: data.stock === "" ? null : Number(data.stock),
+      price: data.price === "" ? null : Number(data.price),
+      discount: data.discount === "" ? null : Number(data.discount)
+    }
+
     try {
       const response = await Axios({
           ...SummaryApi.createProduct,
-          data : data
+          data : payload
       })
       const { data : responseData} = response
 
@@ -235,9 +247,10 @@ const UploadProduct = () => {
                       onChange={(e)=>{
                         const value = e.target.value 
                         const category = allCategory.find(el => el._id === value )
-                        
+                        if(!category) return setSelectCategory("")
                         setData((preve)=>{
-                          return{
+                          const exists = preve.category.some(c => (c?._id || c) === category._id)
+                          return exists ? preve : {
                             ...preve,
                             category : [...preve.category,category],
                           }
@@ -249,7 +262,7 @@ const UploadProduct = () => {
                       {
                         allCategory.map((c,index)=>{
                           return(
-                            <option value={c?._id}>{c.name}</option>
+                            <option key={c?._id || index} value={c?._id}>{c.name}</option>
                           )
                         })
                       }
@@ -279,9 +292,10 @@ const UploadProduct = () => {
                       onChange={(e)=>{
                         const value = e.target.value 
                         const subCategory = allSubCategory.find(el => el._id === value )
-
+                        if(!subCategory) return setSelectSubCategory("")
                         setData((preve)=>{
-                          return{
+                          const exists = preve.subCategory.some(sc => (sc?._id || sc) === subCategory._id)
+                          return exists ? preve : {
                             ...preve,
                             subCategory : [...preve.subCategory,subCategory]
                           }
@@ -293,7 +307,7 @@ const UploadProduct = () => {
                       {
                         allSubCategory.map((c,index)=>{
                           return(
-                            <option value={c?._id}>{c.name}</option>
+                            <option key={c?._id || index} value={c?._id}>{c.name}</option>
                           )
                         })
                       }
