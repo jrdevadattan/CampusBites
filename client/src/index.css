@@ -10,10 +10,8 @@ html{
 
 body{
     font-family: "Poppins", sans-serif;
-    /* Improve legibility with a standard font weight */
     font-weight: 400;
     font-style: normal;
-    /* Darker base text for better contrast */
     @apply bg-blue-50 text-neutral-900 scroll-smooth
 }
 
@@ -29,9 +27,17 @@ body{
 .dark .bg-white{ @apply bg-neutral-900; }
 .dark .bg-blue-50{ @apply bg-neutral-900; }
 .dark .bg-slate-50{ @apply bg-neutral-900; }
+.dark .bg-slate-100{ @apply bg-neutral-800; }
+.dark .bg-gray-50{ @apply bg-neutral-900; }
+.dark .bg-gray-100{ @apply bg-neutral-800; }
 .dark .border{ @apply border-neutral-700; }
+.dark .border-gray-200{ @apply border-neutral-700; }
 .dark .text-neutral-600{ @apply text-neutral-300; }
 .dark .text-neutral-500{ @apply text-neutral-400; }
+.dark .text-gray-600{ @apply text-neutral-300; }
+.dark .text-gray-500{ @apply text-neutral-400; }
+.dark .text-gray-900{ @apply text-neutral-100; }
+.dark .text-black{ @apply text-neutral-100; }
 
 .scrollbar-none::-webkit-scrollbar{
     display: none;
@@ -46,6 +52,10 @@ body{
 }
 .dark .scrollbarCustom::-webkit-scrollbar{ @apply bg-neutral-800; }
 .dark .scrollbarCustom::-webkit-scrollbar-thumb{ @apply bg-neutral-600; }
+
+/* Hover states for better dark mode */
+.dark button:not(.no-dark-hover):hover{ @apply brightness-110; }
+.dark a:hover{ @apply brightness-110; }
 
 /* Form controls: keep background consistent in dark mode and on focus */
 @layer base {

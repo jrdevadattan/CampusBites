@@ -6,8 +6,8 @@ import { GiBroadsword } from "react-icons/gi";
 
 const Footer = () => {
     return (
-        <footer className='border-t mt-6 sm:mt-10'>
-                <div className='container mx-auto px-4 py-6 text-center flex flex-col lg:flex-row lg:justify-between gap-2'>
+        <footer className='border-t dark:border-neutral-700 mt-6 sm:mt-10'>
+                <div className='container mx-auto px-4 py-6 text-center flex flex-col lg:flex-row lg:justify-between gap-2 dark:text-white'>
             <p className='flex items-center justify-center gap-2'>
               <span>Trademarked by Pankaj Khatana</span>
               <GiBroadsword className="w-5 h-5" />

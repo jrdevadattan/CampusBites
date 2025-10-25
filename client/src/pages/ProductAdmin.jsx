@@ -78,14 +78,14 @@ const ProductAdmin = () => {
   
   return (
     <section className=''>
-        <div className='p-2  bg-white shadow-md flex items-center justify-between gap-4'>
+        <div className='p-2  bg-white dark:bg-neutral-900 dark:text-white shadow-md flex items-center justify-between gap-4'>
                 <h2 className='font-semibold'>Product</h2>
-                <div className='h-full min-w-24 max-w-56 w-full ml-auto bg-blue-50 px-4 flex items-center gap-3 py-2 rounded  border focus-within:border-primary-200'>
-                  <IoSearchOutline size={25}/>
+                <div className='h-full min-w-24 max-w-56 w-full ml-auto bg-blue-50 dark:bg-neutral-800 px-4 flex items-center gap-3 py-2 rounded border dark:border-neutral-700 focus-within:border-primary-200 dark:focus-within:border-primary-200'>
+                  <IoSearchOutline size={25} className='dark:text-neutral-300'/>
                   <input
                     type='text'
                     placeholder='Search product here ...' 
-                    className='h-full w-full  outline-none bg-transparent'
+                    className='h-full w-full outline-none bg-transparent dark:text-white dark:placeholder-neutral-400'
                     value={search}
                     onChange={handleOnChange}
                   />
@@ -98,7 +98,7 @@ const ProductAdmin = () => {
         }
 
 
-        <div className='p-4 bg-blue-50'>
+        <div className='p-4 bg-blue-50 dark:bg-neutral-950'>
 
 
             <div className='min-h-[55vh]'>
@@ -114,9 +114,9 @@ const ProductAdmin = () => {
             </div>
             
             <div className='flex justify-between my-4'>
-              <button onClick={handlePrevious} className="border border-primary-200 px-4 py-1 hover:bg-primary-200">Previous</button>
+              <button onClick={handlePrevious} className="border border-primary-200 dark:border-primary-100 px-4 py-1 hover:bg-primary-200 dark:hover:bg-primary-100 dark:text-white dark:hover:text-black transition-colors">Previous</button>
               <button className='w-full bg-slate-100 dark:bg-slate-800 dark:text-white'>{page}/{totalPageCount}</button>
-              <button onClick={handleNext} className="border border-primary-200 px-4 py-1 hover:bg-primary-200">Next</button>
+              <button onClick={handleNext} className="border border-primary-200 dark:border-primary-100 px-4 py-1 hover:bg-primary-200 dark:hover:bg-primary-100 dark:text-white dark:hover:text-black transition-colors">Next</button>
             </div>
 
         </div>

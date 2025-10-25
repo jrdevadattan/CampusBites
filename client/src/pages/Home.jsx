@@ -29,7 +29,7 @@ const Home = () => {
 
 
   return (
-   <section className='bg-transparent'>
+   <section className='bg-transparent dark:bg-neutral-950'>
       <div className='container mx-auto'>
           <div className={`w-full h-full min-h-48 bg-transparent rounded ${!banner && "animate-pulse my-2" } `}>
               <img
@@ -50,9 +50,9 @@ const Home = () => {
             loadingCategory ? (
               new Array(12).fill(null).map((c,index)=>{
                 return(
-                  <div key={index+"loadingcategory"} className='bg-white rounded p-4 min-h-36 grid gap-2 shadow animate-pulse'>
-                    <div className='bg-blue-100 min-h-24 rounded'></div>
-                    <div className='bg-blue-100 h-8 rounded'></div>
+                  <div key={index+"loadingcategory"} className='bg-white dark:bg-neutral-800 rounded p-4 min-h-36 grid gap-2 shadow animate-pulse'>
+                    <div className='bg-blue-100 dark:bg-neutral-700 min-h-24 rounded'></div>
+                    <div className='bg-blue-100 dark:bg-neutral-700 h-8 rounded'></div>
                   </div>
                 )
               })

@@ -56,9 +56,9 @@ const ProductDisplayPage = () => {
   }
   console.log("product data",data)
   return (
-    <section className='container mx-auto p-4 grid lg:grid-cols-2 '>
+    <section className='container mx-auto p-4 grid lg:grid-cols-2 dark:text-white'>
         <div className=''>
-            <div className='bg-white lg:min-h-[65vh] lg:max-h-[65vh] rounded min-h-56 max-h-56 h-full w-full'>
+            <div className='bg-white dark:bg-neutral-900 lg:min-h-[65vh] lg:max-h-[65vh] rounded min-h-56 max-h-56 h-full w-full'>
                 <img
                     src={data.image[image]}
                     className='w-full h-full object-scale-down'
@@ -68,7 +68,7 @@ const ProductDisplayPage = () => {
               {
                 data.image.map((img,index)=>{
                   return(
-                    <div key={img+index+"point"} className={`bg-slate-200 w-3 h-3 lg:w-5 lg:h-5 rounded-full ${index === image && "bg-slate-300"}`}></div>
+                    <div key={img+index+"point"} className={`bg-slate-200 dark:bg-slate-700 w-3 h-3 lg:w-5 lg:h-5 rounded-full ${index === image && "bg-slate-300 dark:bg-slate-600"}`}></div>
                   )
                 })
               }
@@ -78,7 +78,7 @@ const ProductDisplayPage = () => {
                       {
                         data.image.map((img,index)=>{
                           return(
-                            <div className='w-20 h-20 min-h-20 min-w-20 scr cursor-pointer shadow-md' key={img+index}>
+                            <div className='w-20 h-20 min-h-20 min-w-20 scr cursor-pointer shadow-md dark:shadow-neutral-700' key={img+index}>
                               <img
                                   src={img}
                                   alt='min-product'
@@ -91,10 +91,10 @@ const ProductDisplayPage = () => {
                       }
                 </div>
                 <div className='w-full -ml-3 h-full hidden lg:flex justify-between absolute  items-center'>
-                    <button onClick={handleScrollLeft} className='z-10 bg-white relative p-1 rounded-full shadow-lg'>
+                    <button onClick={handleScrollLeft} className='z-10 bg-white dark:bg-neutral-800 dark:text-white relative p-1 rounded-full shadow-lg dark:shadow-neutral-700'>
                         <FaAngleLeft/>
                     </button>
-                    <button onClick={handleScrollRight} className='z-10 bg-white relative p-1 rounded-full shadow-lg'>
+                    <button onClick={handleScrollRight} className='z-10 bg-white dark:bg-neutral-800 dark:text-white relative p-1 rounded-full shadow-lg dark:shadow-neutral-700'>
                         <FaAngleRight/>
                     </button>
                 </div>
@@ -126,15 +126,15 @@ const ProductDisplayPage = () => {
 
 
         <div className='p-4 lg:pl-7 text-base lg:text-lg'>
-            <p className='bg-green-100 text-green-700 w-fit px-2 rounded-full font-semibold'>10 Min</p>
+            <p className='bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 w-fit px-2 rounded-full font-semibold'>10 Min</p>
             <h2 className='text-lg font-semibold lg:text-3xl'>{data.name}</h2>  
             <p className=''>{data.unit}</p> 
             <Divider/>
             <div>
               <p className=''>Price</p> 
               <div className='flex items-center gap-2 lg:gap-4'>
-                <div className='border border-green-600 px-4 py-2 rounded bg-green-50 w-fit'>
-                    <p className='font-semibold text-lg lg:text-xl text-green-700'>{DisplayPriceInRupees(pricewithDiscount(data.price,data.discount))}</p>
+                <div className='border border-green-600 dark:border-green-500 px-4 py-2 rounded bg-green-50 dark:bg-green-900/20 w-fit'>
+                    <p className='font-semibold text-lg lg:text-xl text-green-700 dark:text-green-400'>{DisplayPriceInRupees(pricewithDiscount(data.price,data.discount))}</p>
                 </div>
                 {
                   data.discount && (
@@ -143,7 +143,7 @@ const ProductDisplayPage = () => {
                 }
                 {
                   data.discount && (
-                    <p className="font-bold text-green-700 lg:text-2xl">{data.discount}% <span className='text-base text-green-700'>Discount</span></p>
+                    <p className="font-bold text-green-700 dark:text-green-400 lg:text-2xl">{data.discount}% <span className='text-base text-green-700 dark:text-green-400'>Discount</span></p>
                   )
                 }
               </div>

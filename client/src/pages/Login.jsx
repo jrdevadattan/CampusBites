@@ -70,15 +70,15 @@ const Login = () => {
     }
     return (
         <section className='w-full container mx-auto px-2'>
-            <div className='bg-white my-4 w-full max-w-lg mx-auto rounded p-7'>
+            <div className='bg-white dark:bg-neutral-900 my-4 w-full max-w-lg mx-auto rounded p-7'>
 
                 <form className='grid gap-4 py-4' onSubmit={handleSubmit}>
                     <div className='grid gap-1'>
-                        <label htmlFor='email'>Email :</label>
+                        <label htmlFor='email' className='dark:text-white'>Email :</label>
                         <input
                             type='email'
                             id='email'
-                            className='bg-blue-50 p-2 border rounded outline-none focus:border-primary-200'
+                            className='bg-blue-50 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-400 p-2 border dark:border-neutral-700 rounded outline-none focus:border-primary-200 dark:focus:border-primary-200'
                             name='email'
                             value={data.email}
                             onChange={handleChange}
@@ -86,12 +86,12 @@ const Login = () => {
                         />
                     </div>
                     <div className='grid gap-1'>
-                        <label htmlFor='password'>Password :</label>
-                        <div className='bg-blue-50 p-2 border rounded flex items-center focus-within:border-primary-200'>
+                        <label htmlFor='password' className='dark:text-white'>Password :</label>
+                        <div className='bg-blue-50 dark:bg-neutral-800 dark:text-white p-2 border dark:border-neutral-700 rounded flex items-center focus-within:border-primary-200 dark:focus-within:border-primary-200'>
                             <input
                                 type={showPassword ? "text" : "password"}
                                 id='password'
-                                className='w-full outline-none'
+                                className='w-full outline-none bg-transparent dark:placeholder-neutral-400'
                                 name='password'
                                 value={data.password}
                                 onChange={handleChange}
@@ -107,14 +107,14 @@ const Login = () => {
                                 }
                             </div>
                         </div>
-                        <Link to={"/forgot-password"} className='block ml-auto hover:text-primary-200'>Forgot password ?</Link>
+                        <Link to={"/forgot-password"} className='block ml-auto hover:text-primary-200 dark:text-neutral-300 dark:hover:text-primary-200'>Forgot password ?</Link>
                     </div>
     
                     <button disabled={!valideValue} className={` ${valideValue ? "bg-primary-100 hover:bg-primary-200" : "bg-gray-500" }    text-white py-2 rounded font-semibold my-3 tracking-wide`}>Login</button>
 
                 </form>
 
-                <p>
+                <p className='dark:text-white'>
                     Don't have account? <Link to={"/register"} className='font-semibold text-primary-200 hover:text-primary-100'>Register</Link>
                 </p>
             </div>

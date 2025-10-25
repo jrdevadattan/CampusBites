@@ -58,7 +58,7 @@ const Header = () => {
     // },[cartItem])
 
   return (
-    <header className='h-24 lg:h-20 lg:shadow-md sticky top-0 z-40 flex flex-col justify-center gap-1 bg-white'>
+    <header className='h-24 lg:h-20 lg:shadow-md sticky top-0 z-40 flex flex-col justify-center gap-1 bg-white dark:bg-neutral-900 dark:text-white'>
         {
             !(isSearchPage && isMobile) && (
                 <div className='container mx-auto flex items-center px-2 justify-between'>
@@ -91,7 +91,7 @@ const Header = () => {
                                 {/**login, theme toggle and my cart */}
                                 <div className='flex items-center gap-3'>
                                     {/**user icons display in only mobile version**/}
-                                    <button className='text-neutral-600 lg:hidden' onClick={handleMobileUser}>
+                                    <button className='text-neutral-600 dark:text-neutral-300 lg:hidden' onClick={handleMobileUser}>
                                         <FaRegCircleUser size={26}/>
                                     </button>
                                     {/** Theme toggle visible on mobile too */}
@@ -118,7 +118,7 @@ const Header = () => {
                                                     {
                                                         openUserMenu && (
                                                             <div className='absolute right-0 top-12'>
-                                                                <div className='bg-white rounded p-4 min-w-52 lg:shadow-lg'>
+                                                                <div className='bg-white dark:bg-neutral-800 rounded p-4 min-w-52 lg:shadow-lg border dark:border-neutral-700'>
                                                                     <UserMenu close={handleCloseUserMenu}/>
                                                                 </div>
                                                             </div>

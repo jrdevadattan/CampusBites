@@ -31,11 +31,11 @@ const Search = () => {
     }
 
   return (
-    <div className='w-full  min-w-[300px] lg:min-w-[420px] h-11 lg:h-12 rounded-lg border overflow-hidden flex items-center text-neutral-500 bg-slate-50 group focus-within:border-primary-200 '>
+    <div className='w-full  min-w-[300px] lg:min-w-[420px] h-11 lg:h-12 rounded-lg border dark:border-neutral-700 overflow-hidden flex items-center text-neutral-500 dark:text-neutral-400 bg-slate-50 dark:bg-neutral-800 group focus-within:border-primary-200 dark:focus-within:border-primary-200'>
         <div>
             {
                 (isMobile && isSearchPage ) ? (
-                    <Link to={"/"} className='flex justify-center items-center h-full p-2 m-1 group-focus-within:text-primary-200 bg-white rounded-full shadow-md'>
+                    <Link to={"/"} className='flex justify-center items-center h-full p-2 m-1 group-focus-within:text-primary-200 bg-white dark:bg-neutral-700 dark:text-white rounded-full shadow-md'>
                         <FaArrowLeft size={20}/>
                     </Link>
                 ) :(
@@ -77,7 +77,7 @@ const Search = () => {
                             placeholder='chips, kurkures, drinks, cola cola, too yum, tede mede'
                             autoFocus
                             defaultValue={searchText}
-                            className='bg-transparent w-full h-full outline-none'
+                            className='bg-transparent dark:text-white dark:placeholder-neutral-400 w-full h-full outline-none'
                             onChange={handleOnChange}
                         />
                     </div>
