@@ -18,6 +18,10 @@ const orderSchema = new mongoose.Schema({
         name : String,
         image : Array,
     },
+    quantity : {
+        type : Number,
+        default : 1
+    },
     paymentId : {
         type : String,
         default : ""

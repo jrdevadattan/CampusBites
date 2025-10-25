@@ -148,6 +148,10 @@ const SummaryApi = {
     getOrderItems : {
         url : '/api/order/order-list',
         method : 'get'
+    },
+    getAllOrdersAdmin : {
+        url : '/api/order/admin/all',
+        method : 'get'
     }
 }
 
