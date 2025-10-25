@@ -240,3 +240,7 @@ This project is open source and available under the MIT License.
 ## Contact
 
 For questions or support, please contact the development team.
+
+## Acknowledgments
+
+Special thanks to [Amit Prajapati](https://github.com/IsAmitprajapati) for the original [BlinkIt Clone project](https://github.com/IsAmitprajapati/BlinkIt-Clone-Full-Stack-Ecommerce) which served as inspiration and foundation for CampusBites.
