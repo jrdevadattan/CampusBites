@@ -11,6 +11,7 @@ import UserMenu from './UserMenu';
 import { DisplayPriceInRupees } from '../utils/DisplayPriceInRupees';
 import { useGlobalContext } from '../provider/GlobalProvider';
 import DisplayCartItem from './DisplayCartItem';
+import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
     const [ isMobile ] = useMobile()
@@ -95,7 +96,7 @@ const Header = () => {
                                     </button>
 
                                       {/**Desktop**/}
-                                    <div className='hidden lg:flex  items-center gap-10'>
+                                    <div className='hidden lg:flex  items-center gap-6'>
                                         {
                                             user?._id ? (
                                                 <div className='relative'>
@@ -125,6 +126,7 @@ const Header = () => {
                                                 <button onClick={redirectToLoginPage} className='text-lg px-2'>Login</button>
                                             )
                                         }
+                                        <ThemeToggle />
                                         <button onClick={()=>setOpenCartSection(true)} className='flex items-center gap-2 bg-green-800 hover:bg-green-700 px-3 py-2 rounded text-white'>
                                             {/**add to card icons */}
                                             <div className='animate-bounce'>

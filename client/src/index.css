@@ -17,6 +17,19 @@ body{
     @apply bg-blue-50 text-neutral-900 scroll-smooth
 }
 
+/* Dark theme globals */
+.dark body{
+    @apply bg-neutral-950 text-neutral-100;
+}
+
+/* Map common light surfaces to dark equivalents without touching every component */
+.dark .bg-white{ @apply bg-neutral-900; }
+.dark .bg-blue-50{ @apply bg-neutral-900; }
+.dark .bg-slate-50{ @apply bg-neutral-900; }
+.dark .border{ @apply border-neutral-700; }
+.dark .text-neutral-600{ @apply text-neutral-300; }
+.dark .text-neutral-500{ @apply text-neutral-400; }
+
 .scrollbar-none::-webkit-scrollbar{
     display: none;
 }
@@ -28,3 +41,5 @@ body{
 .scrollbarCustom::-webkit-scrollbar-thumb{
     @apply bg-blue-100 rounded-full
 }
+.dark .scrollbarCustom::-webkit-scrollbar{ @apply bg-neutral-800; }
+.dark .scrollbarCustom::-webkit-scrollbar-thumb{ @apply bg-neutral-600; }
