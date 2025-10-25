@@ -1,5 +1,6 @@
 import sendEmail from '../config/sendEmail.js'
 import UserModel from '../models/user.model.js'
+import AddressModel from '../models/address.model.js'
 import bcryptjs from 'bcryptjs'
 import verifyEmailTemplate from '../utils/verifyEmailTemplate.js'
 import generatedAccessToken from '../utils/generatedAccessToken.js'
@@ -11,7 +12,7 @@ import jwt from 'jsonwebtoken'
 
 export async function registerUserController(request,response){
     try {
-        const { name, email , password } = request.body
+        const { name, email, password, hostelName, roomNumber, mobile } = request.body
 
         if(!name || !email || !password){
             return response.status(400).json({
@@ -42,6 +43,18 @@ export async function registerUserController(request,response){
 
         const newUser = new UserModel(payload)
         const save = await newUser.save()
+
+        // Create default address if hostel details provided
+        if(hostelName && roomNumber) {
+            const addressPayload = {
+                userId: save._id,
+                hostelName,
+                roomNumber,
+                mobile: mobile || null,
+                status: true
+            }
+            await AddressModel.create(addressPayload)
+        }
 
         const VerifyEmailUrl = `${process.env.FRONTEND_URL}/verify-email?code=${save?._id}`
 

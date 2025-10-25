@@ -1,23 +1,15 @@
 import mongoose from "mongoose";
 
 const addressSchema = new mongoose.Schema({
-    address_line : {
+    hostelName : {
         type : String,
+        required : [true, "Hostel name is required"],
         default : ""
     },
-    city : {
+    roomNumber : {
         type : String,
+        required : [true, "Room number is required"],
         default : ""
-    },
-    state : {
-        type : String,
-        default : ""
-    },
-    pincode : {
-        type : String
-    },
-    country : {
-        type : String
     },
     mobile : {
         type : Number,

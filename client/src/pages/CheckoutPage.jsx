@@ -69,11 +69,9 @@ const CheckoutPage = () => {
                         <input id={"address" + index} type='radio' value={index} onChange={(e) => setSelectAddress(e.target.value)} name='address' />
                       </div>
                       <div>
-                        <p>{address.address_line}</p>
-                        <p>{address.city}</p>
-                        <p>{address.state}</p>
-                        <p>{address.country} - {address.pincode}</p>
-                        <p>{address.mobile}</p>
+                        <p><strong>Hostel:</strong> {address.hostelName}</p>
+                        <p><strong>Room:</strong> {address.roomNumber}</p>
+                        <p><strong>Mobile:</strong> {address.mobile}</p>
                       </div>
                     </div>
                   </label>

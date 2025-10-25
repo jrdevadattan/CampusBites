@@ -12,11 +12,8 @@ const EditAddressDetails = ({close, data}) => {
         defaultValues : {
             _id : data._id,
             userId : data.userId,
-            address_line :data.address_line,
-            city : data.city,
-            state : data.state,
-            country : data.country,
-            pincode : data.pincode,
+            hostelName : data.hostelName,
+            roomNumber : data.roomNumber,
             mobile : data.mobile 
         }
     })
@@ -28,11 +25,8 @@ const EditAddressDetails = ({close, data}) => {
                 ...SummaryApi.updateAddress,
                 data : {
                     ...data,
-                    address_line :data.address_line,
-                    city : data.city,
-                    state : data.state,
-                    country : data.country,
-                    pincode : data.pincode,
+                    hostelName : data.hostelName,
+                    roomNumber : data.roomNumber,
                     mobile : data.mobile
                 }
             })
@@ -62,48 +56,21 @@ const EditAddressDetails = ({close, data}) => {
             </div>
             <form className='mt-4 grid gap-4' onSubmit={handleSubmit(onSubmit)}>
                 <div className='grid gap-1'>
-                    <label htmlFor='addressline'>Address Line :</label>
+                    <label htmlFor='hostelName'>Hostel Name :</label>
                     <input
                         type='text'
-                        id='addressline' 
+                        id='hostelName' 
                         className='border bg-blue-50 p-2 rounded'
-                        {...register("address_line",{required : true})}
+                        {...register("hostelName",{required : true})}
                     />
                 </div>
                 <div className='grid gap-1'>
-                    <label htmlFor='city'>City :</label>
+                    <label htmlFor='roomNumber'>Room Number :</label>
                     <input
                         type='text'
-                        id='city' 
+                        id='roomNumber' 
                         className='border bg-blue-50 p-2 rounded'
-                        {...register("city",{required : true})}
-                    />
-                </div>
-                <div className='grid gap-1'>
-                    <label htmlFor='state'>State :</label>
-                    <input
-                        type='text'
-                        id='state' 
-                        className='border bg-blue-50 p-2 rounded'
-                        {...register("state",{required : true})}
-                    />
-                </div>
-                <div className='grid gap-1'>
-                    <label htmlFor='pincode'>Pincode :</label>
-                    <input
-                        type='text'
-                        id='pincode' 
-                        className='border bg-blue-50 p-2 rounded'
-                        {...register("pincode",{required : true})}
-                    />
-                </div>
-                <div className='grid gap-1'>
-                    <label htmlFor='country'>Country :</label>
-                    <input
-                        type='text'
-                        id='country' 
-                        className='border bg-blue-50 p-2 rounded'
-                        {...register("country",{required : true})}
+                        {...register("roomNumber",{required : true})}
                     />
                 </div>
                 <div className='grid gap-1'>

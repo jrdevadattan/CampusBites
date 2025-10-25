@@ -12,7 +12,10 @@ const Register = () => {
         name: "",
         email: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        hostelName: "",
+        roomNumber: "",
+        mobile: ""
     })
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -58,7 +61,10 @@ const Register = () => {
                     name : "",
                     email : "",
                     password : "",
-                    confirmPassword : ""
+                    confirmPassword : "",
+                    hostelName: "",
+                    roomNumber: "",
+                    mobile: ""
                 })
                 navigate("/login")
             }
@@ -146,6 +152,45 @@ const Register = () => {
                                 }
                             </div>
                         </div>
+                    </div>
+
+                    <div className='grid gap-1'>
+                        <label htmlFor='hostelName'>Hostel Name :</label>
+                        <input
+                            type='text'
+                            id='hostelName'
+                            className='bg-blue-50 p-2 border rounded outline-none focus:border-primary-200'
+                            name='hostelName'
+                            value={data.hostelName}
+                            onChange={handleChange}
+                            placeholder='Enter your hostel name'
+                        />
+                    </div>
+
+                    <div className='grid gap-1'>
+                        <label htmlFor='roomNumber'>Room Number :</label>
+                        <input
+                            type='text'
+                            id='roomNumber'
+                            className='bg-blue-50 p-2 border rounded outline-none focus:border-primary-200'
+                            name='roomNumber'
+                            value={data.roomNumber}
+                            onChange={handleChange}
+                            placeholder='Enter your room number'
+                        />
+                    </div>
+
+                    <div className='grid gap-1'>
+                        <label htmlFor='mobile'>Mobile Number :</label>
+                        <input
+                            type='tel'
+                            id='mobile'
+                            className='bg-blue-50 p-2 border rounded outline-none focus:border-primary-200'
+                            name='mobile'
+                            value={data.mobile}
+                            onChange={handleChange}
+                            placeholder='Enter your mobile number'
+                        />
                     </div>
 
                     <button disabled={!valideValue} className={` ${valideValue ? "bg-primary-100 hover:bg-primary-200" : "bg-gray-500" }    text-white py-2 rounded font-semibold my-3 tracking-wide`}>Register</button>
