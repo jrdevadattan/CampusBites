@@ -1,5 +1,5 @@
 import React from 'react'
-import banner from '../assets/banner.jpg'
+import banner from '../assets/banner.png'
 import bannerMobile from '../assets/banner-mobile.jpg'
 import { useSelector } from 'react-redux'
 import { valideURLConvert } from '../utils/valideURLConvert'
