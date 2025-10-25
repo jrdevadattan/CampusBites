@@ -1,3 +1,40 @@
+// Admin: Update delivered status
+export async function updateOrderDeliveredStatusController(request, response) {
+    try {
+        const { orderId, delivered } = request.body;
+        if (!orderId || typeof delivered !== 'boolean') {
+            return response.status(400).json({
+                message: 'orderId and delivered(boolean) are required',
+                error: true,
+                success: false
+            });
+        }
+        const updated = await OrderModel.findOneAndUpdate(
+            { _id: orderId },
+            { delivered },
+            { new: true }
+        );
+        if (!updated) {
+            return response.status(404).json({
+                message: 'Order not found',
+                error: true,
+                success: false
+            });
+        }
+        return response.json({
+            message: 'Order delivery status updated',
+            data: updated,
+            error: false,
+            success: true
+        });
+    } catch (error) {
+        return response.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false
+        });
+    }
+}
 import CartProductModel from "../models/cartproduct.model.js";
 import OrderModel from "../models/order.model.js";
 import UserModel from "../models/user.model.js";
