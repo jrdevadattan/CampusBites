@@ -13,6 +13,7 @@ import productRouter from './route/product.route.js'
 import cartRouter from './route/cart.route.js'
 import addressRouter from './route/address.route.js'
 import orderRouter from './route/order.route.js'
+import authRouter from './route/auth.route.js'
 
 const app = express()
 
@@ -26,8 +27,14 @@ app.use(cors({
 app.use(express.json())
 app.use(cookieParser())
 app.use(morgan('combined'))
+// Configure helmet but relax COOP/COEP for Google Identity (GSI) iframe/postMessage
 app.use(helmet({
-    crossOriginResourcePolicy : false
+    // prevent blocking Google iframe postMessage; allow popups to communicate
+    crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
+    // keep resource policy disabled as before
+    crossOriginResourcePolicy: false,
+    // do not enable Cross-Origin-Embedder-Policy which can block embedding external iframes
+    crossOriginEmbedderPolicy: false
 }))
 
 app.get('/', (req, res) => {
@@ -42,5 +49,6 @@ app.use('/api/product',productRouter)
 app.use('/api/cart',cartRouter)
 app.use('/api/address',addressRouter)
 app.use('/api/order',orderRouter)
+app.use('/auth', authRouter)
 
 export default app

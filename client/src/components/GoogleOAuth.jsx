@@ -2,7 +2,7 @@
 import { useAuthStore } from "../../stores/authStore";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 
-const clientId = "YOUR_GOOGLE_CLIENT_ID"; // replace with your Google OAuth client ID
+const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID"; // read from env
 
 function GoogleOAuth() {
   const login = useAuthStore((state) => state.login);

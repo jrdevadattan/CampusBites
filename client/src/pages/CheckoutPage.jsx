@@ -20,11 +20,24 @@ const CheckoutPage = () => {
 
   const handleCashOnDelivery = async() => {
       try {
+          // Validate address selection
+          if(!addressList || addressList.length === 0){
+              toast.error('Please add an address before placing an order')
+              setOpenAddress(true)
+              return
+          }
+
+          const chosen = addressList[selectAddress]
+          if(!chosen || !chosen._id){
+              toast.error('Please select a valid address')
+              return
+          }
+
           const response = await Axios({
             ...SummaryApi.CashOnDeliveryOrder,
             data : {
               list_items : cartItemsList,
-              addressId : addressList[selectAddress]?._id,
+              addressId : chosen._id,
               subTotalAmt : totalPrice,
               totalAmt :  totalPrice,
             }
@@ -70,7 +83,7 @@ const CheckoutPage = () => {
                   >
                     <div className='border dark:border-neutral-700 rounded p-3 flex gap-3 hover:bg-blue-50 dark:hover:bg-neutral-800 dark:text-white'>
                       <div>
-                        <input id={"address" + index} type='radio' value={index} onChange={(e) => setSelectAddress(e.target.value)} name='address' />
+                        <input id={"address" + index} type='radio' value={index} checked={Number(selectAddress) === index} onChange={(e) => setSelectAddress(Number(e.target.value))} name='address' />
                       </div>
                       <div>
                         <p><strong>Hostel:</strong> {address.hostelName}</p>
