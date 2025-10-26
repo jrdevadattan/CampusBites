@@ -31,7 +31,13 @@ Axios.interceptors.response.use(
     async(error)=>{
         let originRequest = error.config 
 
-        if(error.response.status === 401 && !originRequest.retry){
+        // error.response may be undefined (for network errors / CORS failures)
+        // If the request itself was the refresh token call, don't try to refresh again
+        if (originRequest && originRequest.url && originRequest.url.includes('/refresh-token')) {
+            return Promise.reject(error)
+        }
+
+        if(error.response && error.response.status === 401 && !originRequest.retry){
             originRequest.retry = true
 
             const refreshToken = localStorage.getItem("refreshToken")
@@ -53,11 +59,15 @@ Axios.interceptors.response.use(
 
 const refreshAccessToken = async(refreshToken)=>{
     try {
-        const response = await Axios({
-            ...SummaryApi.refreshToken,
-            headers : {
-                Authorization : `Bearer ${refreshToken}`
-            }
+        // Use the raw axios instance (not the intercepted Axios) to avoid triggering
+        // the response interceptor and causing a refresh loop if the refresh call fails.
+        const response = await axios.request({
+            url: `${baseURL}${SummaryApi.refreshToken.url}`,
+            method: SummaryApi.refreshToken.method,
+            headers: {
+                Authorization: `Bearer ${refreshToken}`
+            },
+            withCredentials: true
         })
 
         const accessToken = response.data.data.accessToken
@@ -65,6 +75,7 @@ const refreshAccessToken = async(refreshToken)=>{
         return accessToken
     } catch (error) {
         console.log(error)
+        return null
     }
 }
 

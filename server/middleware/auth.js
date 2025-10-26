@@ -25,8 +25,17 @@ const auth = async(request,response,next)=>{
         next()
 
     } catch (error) {
+        // If JWT verification failed, return 401 (unauthorized) instead of 500.
+        if (error && (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError')) {
+            return response.status(401).json({
+                message: error.message || 'Invalid or expired token',
+                error: true,
+                success: false
+            })
+        }
+
         return response.status(500).json({
-            message : "You have not login",///error.message || error,
+            message : "You have not login",
             error : true,
             success : false
         })

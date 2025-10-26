@@ -16,9 +16,12 @@ import orderRouter from './route/order.route.js'
 
 const app = express()
 
+// Normalize frontend URL to avoid mismatches like trailing slashes
+const frontendOrigin = (process.env.FRONTEND_URL || '').replace(/\/$/, '')
+
 app.use(cors({
-    credentials : true,
-    origin : process.env.FRONTEND_URL
+    credentials: true,
+    origin: frontendOrigin
 }))
 app.use(express.json())
 app.use(cookieParser())

@@ -173,7 +173,9 @@ export async function loginController(request,response){
 
         const cookiesOption = {
             httpOnly : true,
-            secure : true,
+            // In development (non-production) we must not set `secure: true` because
+            // browsers won't send cookies over plain HTTP. Make this conditional.
+            secure : process.env.NODE_ENV === 'production',
             sameSite : "None"
         }
         response.cookie('accessToken',accesstoken,cookiesOption)
@@ -205,7 +207,7 @@ export async function logoutController(request,response){
 
         const cookiesOption = {
             httpOnly : true,
-            secure : true,
+            secure : process.env.NODE_ENV === 'production',
             sameSite : "None"
         }
 
@@ -466,7 +468,12 @@ export async function resetpassword(request,response){
 //refresh token controler
 export async function refreshToken(request,response){
     try {
-        const refreshToken = request.cookies.refreshToken || request?.headers?.authorization?.split(" ")[1]  /// [ Bearer token]
+        // Log incoming tokens/headers for debugging refresh failures
+        console.log('[refreshToken] incoming cookies:', request.cookies)
+        console.log('[refreshToken] authorization header:', request.headers.authorization)
+
+        const headerToken = request?.headers?.authorization ? request.headers.authorization.split(" ")[1] : null
+        const refreshToken = request.cookies?.refreshToken || headerToken  // [ Bearer token]
 
         if(!refreshToken){
             return response.status(401).json({
@@ -486,16 +493,18 @@ export async function refreshToken(request,response){
             })
         }
 
-    const userId = verifyToken?.id
+
+        const userId = verifyToken?.id
 
         const newAccessToken = await generatedAccessToken(userId)
 
         const cookiesOption = {
             httpOnly : true,
-            secure : true,
+            secure : process.env.NODE_ENV === 'production',
             sameSite : "None"
         }
 
+        // set new access token cookie (works in dev with secure=false)
         response.cookie('accessToken',newAccessToken,cookiesOption)
 
         return response.json({
@@ -509,6 +518,18 @@ export async function refreshToken(request,response){
 
 
     } catch (error) {
+        // If the refresh token is invalid or expired, jwt.verify will throw an error.
+        // Return 401 for those cases to allow the client to handle re-login flows.
+        if (error && (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError')) {
+            console.warn('[refreshToken] JWT verify failed:', error.message)
+            return response.status(401).json({
+                message: error.message || 'Invalid or expired refresh token',
+                error: true,
+                success: false
+            })
+        }
+
+        console.error('[refreshToken] Unexpected error:', error)
         return response.status(500).json({
             message : error.message || error,
             error : true,
