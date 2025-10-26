@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { FaRegEyeSlash } from "react-icons/fa6";
-import { FaRegEye } from "react-icons/fa6";
+import { FaRegEyeSlash, FaRegEye } from "react-icons/fa6";
 import toast from 'react-hot-toast';
 import Axios from '../utils/Axios';
 import SummaryApi from '../common/SummaryApi';
 import AxiosToastError from '../utils/AxiosToastError';
 import { Link, useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 
 const Register = () => {
     const [data, setData] = useState({
@@ -23,65 +23,65 @@ const Register = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target
-
-        setData((preve) => {
-            return {
-                ...preve,
-                [name]: value
-            }
-        })
+        setData(prev => ({ ...prev, [name]: value }))
     }
 
     const valideValue = Object.values(data).every(el => el)
 
-
-    const handleSubmit = async(e)=>{
+    const handleSubmit = async (e) => {
         e.preventDefault()
-
         if(data.password !== data.confirmPassword){
-            toast.error(
-                "password and confirm password must be same"
-            )
+            toast.error("Password and confirm password must be same")
             return
         }
 
         try {
-            const response = await Axios({
-                ...SummaryApi.register,
-                data : data
-            })
-            
+            const response = await Axios({ ...SummaryApi.register, data })
             if(response.data.error){
                 toast.error(response.data.message)
+                return
             }
-
             if(response.data.success){
                 toast.success(response.data.message)
                 setData({
-                    name : "",
-                    email : "",
-                    password : "",
-                    confirmPassword : "",
-                    hostelName: "",
-                    roomNumber: "",
-                    mobile: ""
+                    name: "", email: "", password: "", confirmPassword: "",
+                    hostelName: "", roomNumber: "", mobile: ""
                 })
                 navigate("/login")
             }
-
         } catch (error) {
             AxiosToastError(error)
         }
-
-
-
     }
+
+    // Google OAuth handlers
+    const handleGoogleSuccess = async (credentialResponse) => {
+        try {
+            const response = await Axios.post('/auth/google-register', {
+                token: credentialResponse.credential
+            })
+            if(response.data.success){
+                toast.success("Registered with Google")
+                navigate("/login")
+            } else {
+                toast.error(response.data.message || "Google registration failed")
+            }
+        } catch (error) {
+            AxiosToastError(error)
+        }
+    }
+
+    const handleGoogleError = () => {
+        toast.error("Google registration failed")
+    }
+
     return (
         <section className='w-full container mx-auto px-2'>
             <div className='bg-white dark:bg-neutral-900 my-4 w-full max-w-lg mx-auto rounded p-7'>
                 <p className='dark:text-white'>Welcome to CampusBites</p>
 
                 <form className='grid gap-4 mt-6' onSubmit={handleSubmit}>
+                    {/* Name */}
                     <div className='grid gap-1'>
                         <label htmlFor='name' className='dark:text-white'>Name :</label>
                         <input
@@ -95,6 +95,8 @@ const Register = () => {
                             placeholder='Enter your name'
                         />
                     </div>
+
+                    {/* Email */}
                     <div className='grid gap-1'>
                         <label htmlFor='email' className='dark:text-white'>Email :</label>
                         <input
@@ -107,6 +109,8 @@ const Register = () => {
                             placeholder='Enter your email'
                         />
                     </div>
+
+                    {/* Password */}
                     <div className='grid gap-1'>
                         <label htmlFor='password' className='dark:text-white'>Password :</label>
                         <div className='bg-blue-50 dark:bg-neutral-800 dark:text-white p-2 border dark:border-neutral-700 rounded flex items-center focus-within:border-primary-200 dark:focus-within:border-primary-200'>
@@ -119,17 +123,13 @@ const Register = () => {
                                 onChange={handleChange}
                                 placeholder='Enter your password'
                             />
-                            <div onClick={() => setShowPassword(preve => !preve)} className='cursor-pointer'>
-                                {
-                                    showPassword ? (
-                                        <FaRegEye />
-                                    ) : (
-                                        <FaRegEyeSlash />
-                                    )
-                                }
+                            <div onClick={() => setShowPassword(prev => !prev)} className='cursor-pointer'>
+                                {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                             </div>
                         </div>
                     </div>
+
+                    {/* Confirm Password */}
                     <div className='grid gap-1'>
                         <label htmlFor='confirmPassword' className='dark:text-white'>Confirm Password :</label>
                         <div className='bg-blue-50 dark:bg-neutral-800 dark:text-white p-2 border dark:border-neutral-700 rounded flex items-center focus-within:border-primary-200 dark:focus-within:border-primary-200'>
@@ -140,20 +140,15 @@ const Register = () => {
                                 name='confirmPassword'
                                 value={data.confirmPassword}
                                 onChange={handleChange}
-                                placeholder='Enter your confirm password'
+                                placeholder='Enter confirm password'
                             />
-                            <div onClick={() => setShowConfirmPassword(preve => !preve)} className='cursor-pointer'>
-                                {
-                                    showConfirmPassword ? (
-                                        <FaRegEye />
-                                    ) : (
-                                        <FaRegEyeSlash />
-                                    )
-                                }
+                            <div onClick={() => setShowConfirmPassword(prev => !prev)} className='cursor-pointer'>
+                                {showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                             </div>
                         </div>
                     </div>
 
+                    {/* Hostel Name */}
                     <div className='grid gap-1'>
                         <label htmlFor='hostelName' className='dark:text-white'>Hostel Name :</label>
                         <input
@@ -167,6 +162,7 @@ const Register = () => {
                         />
                     </div>
 
+                    {/* Room Number */}
                     <div className='grid gap-1'>
                         <label htmlFor='roomNumber' className='dark:text-white'>Room Number :</label>
                         <input
@@ -180,6 +176,7 @@ const Register = () => {
                         />
                     </div>
 
+                    {/* Mobile */}
                     <div className='grid gap-1'>
                         <label htmlFor='mobile' className='dark:text-white'>Mobile Number :</label>
                         <input
@@ -193,12 +190,21 @@ const Register = () => {
                         />
                     </div>
 
-                    <button disabled={!valideValue} className={` ${valideValue ? "bg-primary-100 hover:bg-primary-200" : "bg-gray-500" }    text-white py-2 rounded font-semibold my-3 tracking-wide`}>Register</button>
-
+                    <button disabled={!valideValue} className={`${valideValue ? "bg-primary-100 hover:bg-primary-200" : "bg-gray-500"} text-white py-2 rounded font-semibold my-3 tracking-wide`}>
+                        Register
+                    </button>
                 </form>
 
-                <p className='dark:text-white'>
-                    Already have account ? <Link to={"/login"} className='font-semibold text-primary-200 hover:text-primary-100'>Login</Link>
+                {/* Google OAuth Button */}
+                <div className='mt-4 flex justify-center'>
+                    <GoogleLogin
+                        onSuccess={handleGoogleSuccess}
+                        onError={handleGoogleError}
+                    />
+                </div>
+
+                <p className='dark:text-white mt-4'>
+                    Already have account? <Link to={"/login"} className='font-semibold text-primary-200 hover:text-primary-100'>Login</Link>
                 </p>
             </div>
         </section>
