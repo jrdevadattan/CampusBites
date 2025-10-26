@@ -90,23 +90,45 @@ const Login = () => {
                         />
                     </div>
 
-                    <div className='grid gap-1'>
-                        <label htmlFor='password' className='dark:text-white'>Password :</label>
-                        <div className='bg-blue-50 dark:bg-neutral-800 dark:text-white p-2 border dark:border-neutral-700 rounded flex items-center focus-within:border-primary-200 dark:focus-within:border-primary-200'>
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                id='password'
-                                className='w-full outline-none bg-transparent dark:placeholder-neutral-400'
-                                name='password'
-                                value={data.password}
-                                onChange={handleChange}
-                                placeholder='Enter your password'
-                            />
-                            <div onClick={() => setShowPassword(prev => !prev)} className='cursor-pointer'>
-                                {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
-                            </div>
-                        </div>
-                        <Link to={"/forgot-password"} className='block ml-auto hover:text-primary-200 dark:text-neutral-300 dark:hover:text-primary-200'>Forgot password ?</Link>
+                    <div className="grid gap-1">
+                    <label htmlFor="password" className="dark:text-white">Password :</label>
+                    <div className="bg-blue-50 dark:bg-neutral-800 dark:text-white p-2 border dark:border-neutral-700 rounded flex items-center focus-within:border-primary-200 dark:focus-within:border-primary-200">
+                        <input
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        name="password"
+                        value={data.password}
+                        onChange={handleChange}
+                        placeholder="Enter your password"
+                        style={{
+                            background: "transparent",
+                            border: "0",
+                            outline: "0",
+                            padding: 0,
+                            margin: 0,
+                            boxShadow: "none",
+                            WebkitAppearance: "none",
+                            MozAppearance: "none",
+                            appearance: "none",
+                            width: "100%"
+                        }}
+                        className="w-full text-neutral-800 dark:text-white placeholder-neutral-500 dark:placeholder-neutral-400"
+                        />
+
+                        <button
+                        type="button"
+                        onClick={() => setShowPassword(prev => !prev)}
+                        className="ml-2 cursor-pointer text-neutral-600 dark:text-neutral-300 hover:text-primary-200 transition-colors"
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                        style={{ background: "transparent", border: 0, padding: 0 }}
+                        >
+                        {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                        </button>
+                    </div>
+
+                    <Link to="/forgot-password" className="block ml-auto hover:text-primary-200 dark:text-neutral-300 dark:hover:text-primary-200">
+                        Forgot password ?
+                    </Link>
                     </div>
 
                     <button disabled={!valideValue} className={` ${valideValue ? "bg-primary-100 hover:bg-primary-200" : "bg-gray-500"} text-white py-2 rounded font-semibold my-3 tracking-wide`}>Login</button>

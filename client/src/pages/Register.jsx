@@ -117,7 +117,19 @@ const Register = () => {
                             <input
                                 type={showPassword ? "text" : "password"}
                                 id='password'
-                                className='w-full outline-none bg-transparent dark:placeholder-neutral-400'
+                                style={{
+                                    background: "transparent",
+                                    border: "0",
+                                    outline: "0",
+                                    padding: 0,
+                                    margin: 0,
+                                    boxShadow: "none",
+                                    WebkitAppearance: "none",
+                                    MozAppearance: "none",
+                                    appearance: "none",
+                                    width: "100%"
+                                }}
+                                className="w-full text-neutral-800 dark:text-white placeholder-neutral-500 dark:placeholder-neutral-400"
                                 name='password'
                                 value={data.password}
                                 onChange={handleChange}
@@ -136,7 +148,19 @@ const Register = () => {
                             <input
                                 type={showConfirmPassword ? "text" : "password"}
                                 id='confirmPassword'
-                                className='w-full outline-none bg-transparent dark:placeholder-neutral-400'
+                                style={{
+                                    background: "transparent",
+                                    border: "0",
+                                    outline: "0",
+                                    padding: 0,
+                                    margin: 0,
+                                    boxShadow: "none",
+                                    WebkitAppearance: "none",
+                                    MozAppearance: "none",
+                                    appearance: "none",
+                                    width: "100%"
+                                }}
+                                className="w-full text-neutral-800 dark:text-white placeholder-neutral-500 dark:placeholder-neutral-400"
                                 name='confirmPassword'
                                 value={data.confirmPassword}
                                 onChange={handleChange}
