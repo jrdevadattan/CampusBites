@@ -54,9 +54,9 @@ self.addEventListener('notificationclick', function(event) {
     const data = event.notification.data;
     
     if (action === 'view_order' || !action) {
-        // Open the admin orders page
+        // Open the admin orders page with the correct URL
         event.waitUntil(
-            clients.openWindow('/admin/orders')
+            clients.openWindow('/dashboard/orders')
         );
     } else if (action === 'mark_preparing') {
         // Could trigger an API call to mark order as preparing
