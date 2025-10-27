@@ -1,3 +1,13 @@
+// Service Worker for handling push notifications (v2)
+// Ensure new versions take control quickly
+self.addEventListener('install', (event) => {
+    self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+    event.waitUntil(self.clients.claim());
+});
+
 // Service Worker for handling push notifications
 self.addEventListener('push', function(event) {
     console.log('=== PUSH NOTIFICATION RECEIVED ===');
@@ -52,11 +62,14 @@ self.addEventListener('notificationclick', function(event) {
     
     const action = event.action;
     const data = event.notification.data;
-    
+
+    // Prefer a targetUrl provided in payload, fallback to dashboard orders
+    const targetUrl = (data && data.targetUrl) ? data.targetUrl : '/dashboard/orders';
+
     if (action === 'view_order' || !action) {
-        // Open the admin orders page with the correct URL
+        // Open the intended page
         event.waitUntil(
-            clients.openWindow('/dashboard/orders')
+            clients.openWindow(targetUrl)
         );
     } else if (action === 'mark_preparing') {
         // Could trigger an API call to mark order as preparing

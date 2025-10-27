@@ -122,7 +122,9 @@ const sendOrderNotificationToAdmins = async (orderData) => {
             totalAmount: orderData.totalAmount,
             customerName: orderData.customerName,
             itemCount: orderData.itemCount,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            // Target URL for admins to view orders in dashboard
+            targetUrl: '/dashboard/orders'
         },
         actions: [
             {
