@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import { FaRegEyeSlash, FaRegEye } from "react-icons/fa6";
-import toast from 'react-hot-toast';
-import Axios from '../utils/Axios';
-import SummaryApi from '../common/SummaryApi';
-import AxiosToastError from '../utils/AxiosToastError';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react'
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5"
+import toast from 'react-hot-toast'
+import Axios from '../utils/Axios'
+import SummaryApi from '../common/SummaryApi'
+import AxiosToastError from '../utils/AxiosToastError'
+import { Link, useNavigate } from 'react-router-dom'
 import { GoogleLogin } from '@react-oauth/google';
 
 const Register = () => {
@@ -19,38 +19,68 @@ const Register = () => {
     })
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
     const handleChange = (e) => {
         const { name, value } = e.target
-        setData(prev => ({ ...prev, [name]: value }))
+        setData((preve) => {
+            return {
+                ...preve,
+                [name]: value
+            }
+        })
     }
 
     const valideValue = Object.values(data).every(el => el)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if(data.password !== data.confirmPassword){
+
+        if (data.password !== data.confirmPassword) {
             toast.error("Password and confirm password must be same")
             return
         }
 
         try {
-            const response = await Axios({ ...SummaryApi.register, data })
-            if(response.data.error){
-                toast.error(response.data.message)
-                return
-            }
-            if(response.data.success){
+            setLoading(true)
+            
+            const response = await Axios({
+                ...SummaryApi.register,
+                data: {
+                    name: data.name,
+                    email: data.email,
+                    password: data.password
+                }
+            })
+
+            console.log('Registration response:', response.data)
+
+            if (response.data.success) {
                 toast.success(response.data.message)
-                setData({
-                    name: "", email: "", password: "", confirmPassword: "",
-                    hostelName: "", roomNumber: "", mobile: ""
+                localStorage.setItem('verificationEmail', data.email)
+                navigate('/verify-email', {
+                    state: {
+                        email: data.email,
+                        name: data.name
+                    }
                 })
-                navigate("/login")
+                setData({
+                    name: "",
+                    email: "",
+                    password: "",
+                    confirmPassword: ""
+                })
+            } 
+            // ADDED: Handle error case when user already exists
+            else if (response.data.error) {
+                toast.error(response.data.message) // This will show "Email already registered"
             }
+
         } catch (error) {
             AxiosToastError(error)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -135,8 +165,14 @@ const Register = () => {
                                 onChange={handleChange}
                                 placeholder='Enter your password'
                             />
-                            <div onClick={() => setShowPassword(prev => !prev)} className='cursor-pointer'>
-                                {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                            <div onClick={() => setShowPassword(preve => !preve)} className='cursor-pointer'>
+                                {
+                                    showPassword ? (
+                                        <IoEyeOutline />
+                                    ) : (
+                                        <IoEyeOffOutline />
+                                    )
+                                }
                             </div>
                         </div>
                     </div>
@@ -166,8 +202,14 @@ const Register = () => {
                                 onChange={handleChange}
                                 placeholder='Enter confirm password'
                             />
-                            <div onClick={() => setShowConfirmPassword(prev => !prev)} className='cursor-pointer'>
-                                {showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                            <div onClick={() => setShowConfirmPassword(preve => !preve)} className='cursor-pointer'>
+                                {
+                                    showConfirmPassword ? (
+                                        <IoEyeOutline />
+                                    ) : (
+                                        <IoEyeOffOutline />
+                                    )
+                                }
                             </div>
                         </div>
                     </div>
@@ -214,8 +256,11 @@ const Register = () => {
                         />
                     </div>
 
-                    <button disabled={!valideValue} className={`${valideValue ? "bg-primary-100 hover:bg-primary-200" : "bg-gray-500"} text-white py-2 rounded font-semibold my-3 tracking-wide`}>
-                        Register
+                    <button 
+                        disabled={!valideValue || loading} 
+                        className={`${valideValue ? "bg-green-800 hover:bg-green-700" : "bg-gray-500"} text-white py-2 rounded font-semibold my-3 tracking-wide`}
+                    >
+                        {loading ? 'Creating Account...' : 'Register'}
                     </button>
                 </form>
 
