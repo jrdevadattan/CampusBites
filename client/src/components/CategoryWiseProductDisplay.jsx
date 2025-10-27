@@ -8,6 +8,7 @@ import CardProduct from './CardProduct'
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { useSelector } from 'react-redux'
 import { valideURLConvert } from '../utils/valideURLConvert'
+import { sortProductsByStock } from '../utils/sortProductsByStock'
 
 const CategoryWiseProductDisplay = ({ id, name }) => {
     const [data, setData] = useState([])
@@ -29,7 +30,8 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
             const { data: responseData } = response
 
             if (responseData.success) {
-                setData(responseData.data)
+                const sortedData = sortProductsByStock(responseData.data)
+                setData(sortedData)
             }
         } catch (error) {
             AxiosToastError(error)

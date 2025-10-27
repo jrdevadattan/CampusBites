@@ -7,6 +7,7 @@ import CardProduct from '../components/CardProduct'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useLocation } from 'react-router-dom'
 import noDataImage from '../assets/nothing here yet.webp'
+import { sortProductsByStock } from '../utils/sortProductsByStock'
 
 const SearchPage = () => {
   const [data,setData] = useState([])
@@ -31,13 +32,14 @@ const SearchPage = () => {
         const { data : responseData } = response
 
         if(responseData.success){
+            const sortedData = sortProductsByStock(responseData.data)
             if(responseData.page == 1){
-              setData(responseData.data)
+              setData(sortedData)
             }else{
               setData((preve)=>{
                 return[
                   ...preve,
-                  ...responseData.data
+                  ...sortedData
                 ]
               })
             }

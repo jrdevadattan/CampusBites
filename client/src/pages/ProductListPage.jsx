@@ -7,6 +7,7 @@ import Loading from '../components/Loading'
 import CardProduct from '../components/CardProduct'
 import { useSelector } from 'react-redux'
 import { valideURLConvert } from '../utils/valideURLConvert'
+import { sortProductsByStock } from '../utils/sortProductsByStock'
 
 const ProductListPage = () => {
   const [data, setData] = useState([])
@@ -42,10 +43,11 @@ const ProductListPage = () => {
       const { data: responseData } = response
 
       if (responseData.success) {
+        const sortedData = sortProductsByStock(responseData.data)
         if (responseData.page == 1) {
-          setData(responseData.data)
+          setData(sortedData)
         } else {
-          setData([...data, ...responseData.data])
+          setData([...data, ...sortedData])
         }
         setTotalPage(responseData.totalCount)
       }

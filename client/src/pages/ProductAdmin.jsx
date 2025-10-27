@@ -6,6 +6,7 @@ import Loading from '../components/Loading'
 import ProductCardAdmin from '../components/ProductCardAdmin'
 import { IoSearchOutline } from "react-icons/io5";
 import EditProductAdmin from '../components/EditProductAdmin'
+import { sortProductsByStock } from '../utils/sortProductsByStock'
 
 const ProductAdmin = () => {
   const [productData,setProductData] = useState([])
@@ -30,7 +31,8 @@ const ProductAdmin = () => {
 
         if(responseData.success){
           setTotalPageCount(responseData.totalNoPage)
-          setProductData(responseData.data)
+          const sortedData = sortProductsByStock(responseData.data)
+          setProductData(sortedData)
         }
 
     } catch (error) {
