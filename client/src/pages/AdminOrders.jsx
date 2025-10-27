@@ -72,6 +72,7 @@ const AdminOrders = () => {
   return (
     <div className='p-2 sm:p-4'>
       <h2 className='text-lg font-semibold mb-3 dark:text-white'>All Orders</h2>
+
       {/* Desktop table view - hidden on mobile */}
       <div className='hidden sm:block overflow-x-auto rounded border bg-white dark:bg-neutral-900 dark:border-neutral-700'>
         <table className='w-full text-xs sm:text-sm min-w-[700px]'>

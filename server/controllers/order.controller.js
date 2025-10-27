@@ -83,6 +83,7 @@ import UserModel from "../models/user.model.js";
 import AddressModel from "../models/address.model.js";
 import ProductModel from "../models/product.model.js";
 import sendEmail from "../config/sendEmail.js";
+import { sendOrderNotificationToAdmins } from "../utils/pushNotification.js";
 import mongoose from "mongoose";
 
  export async function CashOnDeliveryOrderController(request,response){
@@ -180,6 +181,23 @@ import mongoose from "mongoose";
                         }
                 } catch (mailErr) {
                         console.warn('[order] Admin email not sent:', mailErr?.message || mailErr)
+                }
+
+                // Send push notification to admins (non-blocking)
+                try {
+                        const user = await UserModel.findById(userId).select('name email mobile').lean()
+                        const orderData = {
+                                orderId: generatedOrder[0]?.orderId || 'Unknown',
+                                customerName: user?.name || 'Customer',
+                                totalAmount: Number(totalAmt || 0).toFixed(2),
+                                itemCount: list_items?.length || 0,
+                                paymentMethod: 'Cash on Delivery'
+                        }
+
+                        await sendOrderNotificationToAdmins(orderData)
+                        console.log('Push notification sent to admins for order:', orderData.orderId)
+                } catch (pushErr) {
+                        console.warn('[order] Push notification not sent:', pushErr?.message || pushErr)
                 }
 
         return response.json({

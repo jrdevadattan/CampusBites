@@ -24,6 +24,7 @@ import CheckoutPage from "../pages/CheckoutPage";
 import Success from "../pages/Success";
 import Cancel from "../pages/Cancel";
 import AdminOrders from "../pages/AdminOrders";
+import NotificationSettings from "../pages/NotificationSettings";
 
 const router = createBrowserRouter([
     {
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
                     {
                         path : 'orders',
                         element : <AdminPermision><AdminOrders/></AdminPermision>
+                    },
+                    {
+                        path : 'notifications',
+                        element : <AdminPermision><NotificationSettings/></AdminPermision>
                     }
                 ]
             },

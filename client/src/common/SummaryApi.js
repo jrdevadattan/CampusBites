@@ -156,6 +156,27 @@ const SummaryApi = {
     updateOrderDeliveredStatusAdmin: {
         url: '/api/order/admin/update-delivered',
         method: 'put'
+    },
+    // Push Notification APIs
+    getVapidKey: {
+        url: '/api/notifications/vapid-public-key',
+        method: 'get'
+    },
+    subscribePushNotifications: {
+        url: '/api/notifications/admin/subscribe',
+        method: 'post'
+    },
+    unsubscribePushNotifications: {
+        url: '/api/notifications/admin/unsubscribe',
+        method: 'post'
+    },
+    sendTestNotification: {
+        url: '/api/notifications/admin/test',
+        method: 'post'
+    },
+    debugNotifications: {
+        url: '/api/notifications/admin/debug',
+        method: 'get'
     }
 }
 
