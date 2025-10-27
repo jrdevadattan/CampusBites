@@ -88,6 +88,21 @@ const AdminOrders = () => {
     }
   }
 
+  // Sort orders: pending (not delivered, not cancelled) first, then delivered, then cancelled
+  const sortedOrders = [...orders].sort((a, b) => {
+    // Pending first
+    if (!a.delivered && !a.cancelled && (b.delivered || b.cancelled)) return -1;
+    if (!b.delivered && !b.cancelled && (a.delivered || a.cancelled)) return 1;
+    // Delivered next
+    if (a.delivered && !a.cancelled && (!b.delivered || b.cancelled)) return -1;
+    if (b.delivered && !b.cancelled && (!a.delivered || a.cancelled)) return 1;
+    // Cancelled last
+    if (a.cancelled && !b.cancelled) return 1;
+    if (b.cancelled && !a.cancelled) return -1;
+    // Otherwise, keep original order (by createdAt desc)
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+
   if (loading) return <Loading />
 
   if (!orders?.length) return (
@@ -118,7 +133,7 @@ const AdminOrders = () => {
               </tr>
             </thead>
             <tbody>
-              {orders.map((o) => {
+              {sortedOrders.map((o) => {
                 const d = new Date(o.createdAt)
                 const customer = o.userId || {}
                 const addr = o.delivery_address || {}
@@ -176,7 +191,7 @@ const AdminOrders = () => {
       </div>
       {/* Mobile card view - hidden on desktop */}
       <div className='sm:hidden flex flex-col gap-3'>
-        {orders.map((o) => {
+        {sortedOrders.map((o) => {
           const d = new Date(o.createdAt)
           const customer = o.userId || {}
           const addr = o.delivery_address || {}
