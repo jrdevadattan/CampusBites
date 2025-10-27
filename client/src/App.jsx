@@ -64,7 +64,13 @@ function App() {
   
 
   useEffect(()=>{
-    fetchUser()
+    // Only attempt to fetch user details if we have an access or refresh token
+    const accessToken = localStorage.getItem('accesstoken')
+    const refreshToken = localStorage.getItem('refreshToken')
+
+    if (accessToken || refreshToken) {
+      fetchUser()
+    }
     fetchCategory()
     fetchSubCategory()
     // fetchCartItem()

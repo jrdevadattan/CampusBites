@@ -37,7 +37,11 @@ const Login = () => {
                 localStorage.setItem('refreshToken', response.data.data.refreshToken)
 
                 const userDetails = await fetchUserDetails()
-                dispatch(setUserDetails(userDetails.data))
+                if (userDetails && userDetails.success) {
+                    dispatch(setUserDetails(userDetails.data))
+                } else {
+                    console.info('Login: fetchUserDetails returned no user data after login')
+                }
 
                 setData({ email: "", password: "" })
                 navigate("/")
@@ -58,7 +62,11 @@ const Login = () => {
                 localStorage.setItem('refreshToken', response.data.data.refreshToken)
                 
                 const userDetails = await fetchUserDetails()
-                dispatch(setUserDetails(userDetails.data))
+                if (userDetails && userDetails.success) {
+                    dispatch(setUserDetails(userDetails.data))
+                } else {
+                    console.info('Google login: fetchUserDetails returned no user data after login')
+                }
 
                 navigate("/")
             } else {

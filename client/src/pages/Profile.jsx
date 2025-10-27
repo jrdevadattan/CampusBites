@@ -55,7 +55,11 @@ const Profile = () => {
             if(responseData.success){
                 toast.success(responseData.message)
                 const userData = await fetchUserDetails()
-                dispatch(setUserDetails(userData.data))
+                if (userData && userData.success) {
+                    dispatch(setUserDetails(userData.data))
+                } else {
+                    console.info('Profile update: fetchUserDetails did not return user data')
+                }
             }
 
         } catch (error) {

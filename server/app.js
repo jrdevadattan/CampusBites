@@ -22,10 +22,39 @@ const frontendOrigin = (process.env.FRONTEND_URL || '').replace(/\/$/, '')
 
 // CORS options - allow the configured frontend in production. During local
 // development (when FRONTEND_URL is not set) allow the origin dynamically so
-// tools like Vite can connect without extra env config.
+// tools like Vite can connect without extra env config. Use a custom origin
+// function so we can accept the same host+port even if the protocol differs
+// (e.g. `https://localhost:5173` vs `http://localhost:5173`) which otherwise
+// causes strict string mismatch and the browser will reject the response.
 const corsOptions = {
     credentials: true,
-    origin: frontendOrigin || (process.env.NODE_ENV !== 'production' ? true : false)
+    origin: (origin, callback) => {
+        // If no origin (server-to-server or same-origin non-browser request), allow
+        if (!origin) return callback(null, true)
+
+        // If FRONTEND_URL is not configured, allow all origins in dev
+        if (!frontendOrigin && process.env.NODE_ENV !== 'production') {
+            return callback(null, true)
+        }
+
+        // If frontendOrigin configured, try a permissive host+port match so that
+        // protocol mismatches don't block local dev usage (e.g. http vs https).
+        try {
+            const reqUrl = new URL(origin)
+            const allowedUrl = new URL(frontendOrigin)
+            if (reqUrl.host === allowedUrl.host) {
+                return callback(null, true)
+            }
+        } catch (err) {
+            // fall through
+        }
+
+        // Fallback to exact match
+        if (origin === frontendOrigin) return callback(null, true)
+
+        // Not allowed
+        return callback(new Error('CORS policy: origin not allowed'), false)
+    }
 }
 
 app.use(cors(corsOptions))
