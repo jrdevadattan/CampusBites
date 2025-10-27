@@ -33,15 +33,14 @@ const CardProduct = ({data}) => {
       <div className='px-2 lg:px-0 font-medium text-ellipsis text-sm lg:text-base line-clamp-2 dark:text-white'>
         {data.name}
       </div>
-      <div className='w-fit gap-1 px-2 lg:px-0 text-sm lg:text-base dark:text-neutral-300'>
-        {data.unit} 
-        
+      <div className='px-2 lg:px-0 text-xs lg:text-sm dark:text-neutral-400'>
+        {data.stock > 0 ? `${data.stock} stocks left` : 'Out of stock'}
       </div>
 
-      <div className='px-2 lg:px-0 flex items-center justify-between gap-1 lg:gap-3 text-sm lg:text-base'>
-        <div className='flex flex-col gap-1'>
-          <div className='flex items-center gap-2'>
-            <div className='font-semibold dark:text-white'>
+      <div className='px-2 lg:px-0 flex items-center justify-between gap-2 text-sm lg:text-base'>
+        <div className='flex flex-col gap-1 flex-1 min-w-0'>
+          <div className='flex items-center gap-1 lg:gap-2 flex-wrap'>
+            <div className='font-semibold dark:text-white text-sm lg:text-base'>
                 {DisplayPriceInRupees(pricewithDiscount(data.price,data.discount))} 
             </div>
             {
@@ -53,15 +52,14 @@ const CardProduct = ({data}) => {
             }
           </div>
         </div>
-        <div className=''>
+        <div className='flex-shrink-0 w-16 lg:w-auto'>
           {
             data.stock == 0 ? (
-              <p className='text-red-500 dark:text-red-400 text-sm text-center'>Out of stock</p>
+              <p className='text-red-500 dark:text-red-400 text-xs lg:text-sm text-center'>Out of stock</p>
             ) : (
               <AddToCartButton data={data} />
             )
           }
-            
         </div>
       </div>
 
