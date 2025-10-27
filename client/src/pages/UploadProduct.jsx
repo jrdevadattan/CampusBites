@@ -23,6 +23,7 @@ const UploadProduct = () => {
       stock : "",
       price : "",
       discount : "",
+      discountedPrice : "",
       description : "",
       more_details : {},
   })
@@ -41,10 +42,25 @@ const UploadProduct = () => {
     const { name, value} = e.target 
 
     setData((preve)=>{
-      return{
+      const updatedData = {
           ...preve,
           [name]  : value
       }
+      
+      // Calculate discount percentage when price or discounted price changes
+      if (name === 'price' || name === 'discountedPrice') {
+        const price = name === 'price' ? Number(value) : Number(preve.price)
+        const discountedPrice = name === 'discountedPrice' ? Number(value) : Number(preve.discountedPrice)
+        
+        if (price && discountedPrice && discountedPrice < price) {
+          const discountPercentage = Math.round(((price - discountedPrice) / price) * 100)
+          updatedData.discount = discountPercentage
+        } else if (price && discountedPrice && discountedPrice >= price) {
+          updatedData.discount = 0
+        }
+      }
+      
+      return updatedData
     })
   }
 
@@ -143,6 +159,7 @@ const UploadProduct = () => {
             stock : "",
             price : "",
             discount : "",
+            discountedPrice : "",
             description : "",
             more_details : {},
           })
@@ -372,17 +389,26 @@ const UploadProduct = () => {
                 </div>
 
                 <div className='grid gap-1'>
-                  <label htmlFor='discount' className='font-medium dark:text-white'>Discount</label>
+                  <div className='flex items-center justify-between'>
+                    <label htmlFor='discountedPrice' className='font-medium dark:text-white'>Discounted Price</label>
+                    {data.discount > 0 && (
+                      <span className='text-sm text-green-600 dark:text-green-400 font-medium'>
+                        {data.discount}% OFF
+                      </span>
+                    )}
+                  </div>
                   <input 
-                    id='discount'
+                    id='discountedPrice'
                     type='number'
-                    placeholder='Enter product discount'
-                    name='discount'
-                    value={data.discount}
+                    placeholder='Enter discounted price'
+                    name='discountedPrice'
+                    value={data.discountedPrice}
                     onChange={handleChange}
-                    required
                     className='bg-blue-50 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-400 p-2 outline-none border dark:border-neutral-700 focus-within:border-primary-200 dark:focus-within:border-primary-200 rounded'
                   />
+                  {data.price && data.discountedPrice && Number(data.discountedPrice) >= Number(data.price) && (
+                    <p className='text-red-500 text-sm'>Discounted price should be less than original price</p>
+                  )}
                 </div>
 
 
