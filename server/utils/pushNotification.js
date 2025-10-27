@@ -1,10 +1,16 @@
 import webpush from 'web-push';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configure web-push with VAPID keys
 // You'll need to generate these keys and add them to your environment variables
 const vapidKeys = {
-    publicKey: process.env.VAPID_PUBLIC_KEY || 'BEl62iUYgUivxIkv69yViEuiBIa40HI2BbSDgVdAVAOHxMrKNL9CPNNqiLNkUSYKGBYjBqNqtV5c4LlKGGHAe9s',
-    privateKey: process.env.VAPID_PRIVATE_KEY || 'UxN2-OU812-T7dtVuY4n-POQeVgZE2z6QRpOtJVkW5o'
+    publicKey: process.env.VAPID_PUBLIC_KEY || 'BIbq5Pa1fOMZNf_bWHR32UPIp5uVuopXgO2sAAFP_m_Kg_2BAeTGGb4G1rg1yUiYOFnvoLr8neknLgCyF1iWFUU',
+    privateKey: process.env.VAPID_PRIVATE_KEY || 'qSlQJsty7UXhuGeU30nIFnFQMI6W8pxRBJGQq3cL5fE'
 };
 
 // Set VAPID details
@@ -14,8 +20,31 @@ webpush.setVapidDetails(
     vapidKeys.privateKey
 );
 
-// Store admin subscriptions (in production, store these in database)
+// Path to store subscriptions (simple file-based persistence)
+const SUBSCRIPTIONS_FILE = path.join(__dirname, 'subscriptions.json');
+
+// Load subscriptions from file
 let adminSubscriptions = [];
+try {
+    if (fs.existsSync(SUBSCRIPTIONS_FILE)) {
+        const data = fs.readFileSync(SUBSCRIPTIONS_FILE, 'utf8');
+        adminSubscriptions = JSON.parse(data);
+        console.log(`Loaded ${adminSubscriptions.length} admin subscriptions from file`);
+    }
+} catch (error) {
+    console.error('Error loading subscriptions:', error);
+    adminSubscriptions = [];
+}
+
+// Save subscriptions to file
+const saveSubscriptions = () => {
+    try {
+        fs.writeFileSync(SUBSCRIPTIONS_FILE, JSON.stringify(adminSubscriptions, null, 2));
+        console.log(`Saved ${adminSubscriptions.length} subscriptions to file`);
+    } catch (error) {
+        console.error('Error saving subscriptions:', error);
+    }
+};
 
 const addAdminSubscription = (subscription) => {
     console.log('=== ADDING ADMIN SUBSCRIPTION ===');
@@ -36,6 +65,7 @@ const addAdminSubscription = (subscription) => {
     }
     
     adminSubscriptions.push(subscription);
+    saveSubscriptions(); // Persist to file
     console.log('Total admin subscriptions:', adminSubscriptions.length);
     console.log('Admin subscription added:', subscription.endpoint.substring(0, 50) + '...');
 };
@@ -44,6 +74,7 @@ const removeAdminSubscription = (endpoint) => {
     adminSubscriptions = adminSubscriptions.filter(
         sub => sub.endpoint !== endpoint
     );
+    saveSubscriptions(); // Persist to file
     console.log('Admin subscription removed:', endpoint);
 };
 
@@ -113,6 +144,8 @@ const sendOrderNotificationToAdmins = async (orderData) => {
 };
 
 const getDebugInfo = () => {
+    console.log('=== getDebugInfo called ===');
+    console.log('Total subscriptions:', adminSubscriptions.length);
     return {
         subscriptionCount: adminSubscriptions.length,
         subscriptions: adminSubscriptions.map(sub => ({
