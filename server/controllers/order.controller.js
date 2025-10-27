@@ -267,3 +267,103 @@ export async function getAllOrdersController(request, response){
         })
     }
 }
+
+// Cancel order (for both admin and user)
+export async function cancelOrderController(request, response) {
+    try {
+        const { orderId, reason } = request.body;
+        const userId = request.userId; // From auth middleware
+
+        if (!orderId) {
+            return response.status(400).json({
+                message: 'orderId is required',
+                error: true,
+                success: false
+            });
+        }
+
+        // Find the order
+        const order = await OrderModel.findById(orderId);
+        if (!order) {
+            return response.status(404).json({
+                message: 'Order not found',
+                error: true,
+                success: false
+            });
+        }
+
+        // Check if user has permission to cancel this order
+        // Admin can cancel any order, user can only cancel their own order
+        const user = await UserModel.findById(userId);
+        const isAdmin = user.role === 'ADMIN';
+        
+        if (!isAdmin && order.userId.toString() !== userId) {
+            return response.status(403).json({
+                message: 'You do not have permission to cancel this order',
+                error: true,
+                success: false
+            });
+        }
+
+        // Check if order is already cancelled
+        if (order.cancelled) {
+            return response.status(400).json({
+                message: 'Order is already cancelled',
+                error: true,
+                success: false
+            });
+        }
+
+        // Check if order is already delivered
+        if (order.delivered) {
+            return response.status(400).json({
+                message: 'Cannot cancel an order that has already been delivered',
+                error: true,
+                success: false
+            });
+        }
+
+        // Restore stock ONLY if order was delivered (i.e., stock was reduced)
+        if (order.delivered) {
+            try {
+                const product = await ProductModel.findById(order.productId);
+                if (product) {
+                    const newStock = (product.stock || 0) + order.quantity;
+                    await ProductModel.findByIdAndUpdate(
+                        order.productId, 
+                        { stock: newStock }
+                    );
+                    console.log(`Stock restored for cancelled order: ${product.name} - ${product.stock} -> ${newStock}`);
+                }
+            } catch (stockError) {
+                console.error('Error restoring stock:', stockError);
+            }
+        }
+
+        // Update order as cancelled
+        const updatedOrder = await OrderModel.findByIdAndUpdate(
+            orderId,
+            {
+                cancelled: true,
+                cancelledAt: new Date(),
+                cancelReason: reason || 'No reason provided'
+            },
+            { new: true }
+        ).populate('delivery_address')
+         .populate({ path: 'userId', select: 'name email mobile role' });
+
+        return response.json({
+            message: 'Order cancelled successfully',
+            data: updatedOrder,
+            error: false,
+            success: true
+        });
+
+    } catch (error) {
+        return response.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false
+        });
+    }
+}

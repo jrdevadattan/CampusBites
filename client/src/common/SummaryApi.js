@@ -157,6 +157,10 @@ const SummaryApi = {
         url: '/api/order/admin/update-delivered',
         method: 'put'
     },
+    cancelOrder: {
+        url: '/api/order/cancel',
+        method: 'put'
+    },
     // Push Notification APIs
     getVapidKey: {
         url: '/api/notifications/vapid-public-key',

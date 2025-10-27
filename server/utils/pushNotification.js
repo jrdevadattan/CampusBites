@@ -132,7 +132,7 @@ const sendOrderNotificationToAdmins = async (orderData) => {
             },
             {
                 action: 'mark_preparing',
-                title: 'Start Preparing',
+                title: 'Ok',
                 icon: '/prepare-icon.png'
             }
         ],

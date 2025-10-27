@@ -22,7 +22,9 @@ const MyOrders = () => {
               <div key={order._id+index+"order"} className='order rounded p-3 text-sm border mb-3 bg-white max-w-full overflow-hidden'>
                   <div className='flex justify-between items-center mb-2 gap-2 flex-wrap'>
                     <p className='font-semibold truncate max-w-[60vw]'>Order No: {order?.orderId}</p>
-                    {order.delivered ? (
+                    {order.cancelled ? (
+                      <span className='inline-block px-2 py-1 rounded bg-red-100 text-red-700 text-xs font-semibold whitespace-nowrap'>Cancelled</span>
+                    ) : order.delivered ? (
                       <span className='inline-block px-2 py-1 rounded bg-green-100 text-green-700 text-xs font-semibold whitespace-nowrap'>Delivered</span>
                     ) : (
                       <span className='inline-block px-2 py-1 rounded bg-yellow-100 text-yellow-700 text-xs font-semibold whitespace-nowrap'>Not Delivered</span>
@@ -39,6 +41,11 @@ const MyOrders = () => {
                       <p className='text-xs text-neutral-500'>Qty: {order.quantity}</p>
                     </div>
                   </div>
+                  {order.cancelled && order.cancelReason && (
+                    <div className='mt-2 text-xs bg-red-50 dark:bg-red-900/30 border-l-2 border-red-500 dark:border-red-400 p-2 rounded'>
+                      <span className='font-medium text-red-700 dark:text-red-300'>Reason:</span> <span className='dark:text-red-200'>{order.cancelReason}</span>
+                    </div>
+                  )}
               </div>
             )
           })
