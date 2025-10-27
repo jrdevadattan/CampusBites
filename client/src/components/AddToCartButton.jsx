@@ -8,7 +8,7 @@ import Loading from './Loading'
 import { useSelector } from 'react-redux'
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
-const AddToCartButton = ({ data }) => {
+const AddToCartButton = ({ data, size = "default" }) => {
     const { fetchCartItem, updateCartItem, deleteCartItem } = useGlobalContext()
     const [loading, setLoading] = useState(false)
     const cartItem = useSelector(state => state.cartItem.cart)
@@ -82,19 +82,19 @@ const AddToCartButton = ({ data }) => {
         }
     }
     return (
-        <div className='w-full max-w-[60px] lg:max-w-[150px]'>
+        <div className={`w-full ${size === 'large' ? 'max-w-none' : 'max-w-[60px] lg:max-w-[150px]'}`}>
             {
                 isAvailableCart ? (
-                    <div className='flex w-full h-full'>
-                        <button onClick={decreaseQty} className='bg-green-600 hover:bg-green-700 text-white flex-1 w-full p-1 rounded-l flex items-center justify-center text-xs lg:text-sm'><FaMinus /></button>
+                    <div className={`flex w-full h-full ${size === 'large' ? 'gap-2' : ''}`}>
+                        <button onClick={decreaseQty} className={`bg-green-600 hover:bg-green-700 text-white flex-1 w-full ${size === 'large' ? 'p-3 text-lg' : 'p-1 text-xs lg:text-sm'} rounded-l flex items-center justify-center`}><FaMinus /></button>
 
-                        <p className='flex-1 w-full font-semibold px-1 flex items-center justify-center text-xs lg:text-sm bg-gray-100 dark:bg-gray-700'>{qty}</p>
+                        <p className={`flex-1 w-full font-semibold ${size === 'large' ? 'px-4 text-lg' : 'px-1 text-xs lg:text-sm'} flex items-center justify-center bg-gray-100 dark:bg-gray-700`}>{qty}</p>
 
-                        <button onClick={increaseQty} className='bg-green-600 hover:bg-green-700 text-white flex-1 w-full p-1 rounded-r flex items-center justify-center text-xs lg:text-sm'><FaPlus /></button>
+                        <button onClick={increaseQty} className={`bg-green-600 hover:bg-green-700 text-white flex-1 w-full ${size === 'large' ? 'p-3 text-lg' : 'p-1 text-xs lg:text-sm'} rounded-r flex items-center justify-center`}><FaPlus /></button>
                     </div>
                 ) : (
-                    <button onClick={handleADDTocart} className='bg-green-600 hover:bg-green-700 text-white px-1 lg:px-4 py-1 rounded text-xs lg:text-sm w-full'>
-                        {loading ? <Loading /> : "Add"}
+                    <button onClick={handleADDTocart} className={`bg-green-600 hover:bg-green-700 text-white ${size === 'large' ? 'px-8 py-3 text-lg font-semibold' : 'px-1 lg:px-4 py-1 text-xs lg:text-sm'} rounded w-full transition-colors duration-200`}>
+                        {loading ? <Loading /> : (size === 'large' ? "Add to Cart" : "Add")}
                     </button>
                 )
             }

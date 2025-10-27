@@ -145,16 +145,34 @@ const ProductDisplayPage = () => {
                 }
               </div>
 
+            </div>
+
+            {/* Stock Information */}
+            <div className='my-3'>
+              <p className='text-neutral-600 dark:text-neutral-400 mb-1'>Availability</p>
+              {
+                data.stock === 0 ? (
+                  <p className='text-lg font-semibold text-red-500 dark:text-red-400'>Out of Stock</p>
+                ) : (
+                  <p className='text-base font-medium text-green-600 dark:text-green-400'>
+                    {data.stock} {data.stock === 1 ? 'item' : 'items'} left in stock
+                  </p>
+                )
+              }
             </div> 
               
               {
                 data.stock === 0 ? (
-                  <p className='text-lg text-red-500 my-2'>Out of Stock</p>
+                  <div className='my-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg'>
+                    <p className='text-lg font-semibold text-red-500 dark:text-red-400 text-center'>Currently Out of Stock</p>
+                    <p className='text-sm text-red-600 dark:text-red-300 text-center mt-1'>We'll notify you when this item is back in stock</p>
+                  </div>
                 ) 
                 : (
-                  // <button className='my-4 px-4 py-1 bg-green-600 hover:bg-green-700 text-white rounded'>Add</button>
                   <div className='my-4'>
-                    <AddToCartButton data={data}/>
+                    <div className='bg-white dark:bg-neutral-800 p-4 border border-gray-200 dark:border-neutral-700 rounded-lg shadow-sm'>
+                      <AddToCartButton data={data} size="large"/>
+                    </div>
                   </div>
                 )
               }
