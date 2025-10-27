@@ -9,18 +9,60 @@ export async function updateOrderDeliveredStatusController(request, response) {
                 success: false
             });
         }
-        const updated = await OrderModel.findOneAndUpdate(
-            { _id: orderId },
-            { delivered },
-            { new: true }
-        );
-        if (!updated) {
+
+        // Find the order first to get current status and product details
+        const currentOrder = await OrderModel.findById(orderId);
+        if (!currentOrder) {
             return response.status(404).json({
                 message: 'Order not found',
                 error: true,
                 success: false
             });
         }
+
+        // If marking as delivered and it wasn't delivered before, reduce stock
+        if (delivered && !currentOrder.delivered) {
+            try {
+                const product = await ProductModel.findById(currentOrder.productId);
+                if (product) {
+                    const newStock = Math.max(0, (product.stock || 0) - currentOrder.quantity);
+                    await ProductModel.findByIdAndUpdate(
+                        currentOrder.productId, 
+                        { stock: newStock }
+                    );
+                    console.log(`Stock reduced for product ${product.name}: ${product.stock} -> ${newStock}`);
+                }
+            } catch (stockError) {
+                console.error('Error updating stock:', stockError);
+                // Continue with order update even if stock update fails
+            }
+        }
+
+        // If marking as not delivered and it was delivered before, restore stock
+        if (!delivered && currentOrder.delivered) {
+            try {
+                const product = await ProductModel.findById(currentOrder.productId);
+                if (product) {
+                    const newStock = (product.stock || 0) + currentOrder.quantity;
+                    await ProductModel.findByIdAndUpdate(
+                        currentOrder.productId, 
+                        { stock: newStock }
+                    );
+                    console.log(`Stock restored for product ${product.name}: ${product.stock} -> ${newStock}`);
+                }
+            } catch (stockError) {
+                console.error('Error restoring stock:', stockError);
+                // Continue with order update even if stock update fails
+            }
+        }
+
+        // Update the order delivery status
+        const updated = await OrderModel.findOneAndUpdate(
+            { _id: orderId },
+            { delivered },
+            { new: true }
+        );
+
         return response.json({
             message: 'Order delivery status updated',
             data: updated,
@@ -39,6 +81,7 @@ import CartProductModel from "../models/cartproduct.model.js";
 import OrderModel from "../models/order.model.js";
 import UserModel from "../models/user.model.js";
 import AddressModel from "../models/address.model.js";
+import ProductModel from "../models/product.model.js";
 import sendEmail from "../config/sendEmail.js";
 import mongoose from "mongoose";
 
