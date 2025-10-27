@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5"
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6"
 import toast from 'react-hot-toast'
 import Axios from '../utils/Axios'
 import SummaryApi from '../common/SummaryApi'
@@ -91,32 +91,50 @@ const Login = () => {
                             placeholder='Enter email'
                         />
                     </div>
-                    <div className='grid gap-1'>
-                        <label htmlFor='password'>Password :</label>
-                        <div className='bg-blue-50 p-2 border rounded flex items-center focus-within:border-primary-200'>
+
+                    <div className="grid gap-1">
+                        <label htmlFor="password" className="dark:text-white">Password :</label>
+                        <div className="bg-blue-50 dark:bg-neutral-800 dark:text-white p-2 border dark:border-neutral-700 rounded flex items-center focus-within:border-primary-200 dark:focus-within:border-primary-200">
                             <input
                                 type={showPassword ? "text" : "password"}
-                                id='password'
-                                className='w-full outline-none'
-                                name='password'
+                                id="password"
+                                name="password"
                                 value={data.password}
                                 onChange={handleChange}
-                                placeholder='Enter password'
+                                placeholder="Enter your password"
+                                style={{
+                                    background: "transparent",
+                                    border: "0",
+                                    outline: "0",
+                                    padding: 0,
+                                    margin: 0,
+                                    boxShadow: "none",
+                                    WebkitAppearance: "none",
+                                    MozAppearance: "none",
+                                    appearance: "none",
+                                    width: "100%"
+                                }}
+                                className="w-full text-neutral-800 dark:text-white placeholder-neutral-500 dark:placeholder-neutral-400"
                             />
-                            <div className='cursor-pointer' onClick={() => setShowPassword(preve => !preve)}>
-                                {
-                                    showPassword ? (
-                                        <IoEyeOutline />
-                                    ) : (
-                                        <IoEyeOffOutline />
-                                    )
-                                }
-                            </div>
+
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(prev => !prev)}
+                                className="ml-2 cursor-pointer text-neutral-600 dark:text-neutral-300 hover:text-primary-200 transition-colors"
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                style={{ background: "transparent", border: 0, padding: 0 }}
+                            >
+                                {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                            </button>
                         </div>
+
+                        <Link to="/forgot-password" className="block ml-auto hover:text-primary-200 dark:text-neutral-300 dark:hover:text-primary-200">
+                            Forgot password ?
+                        </Link>
                     </div>
 
                     <button 
-                        disabled={!valideValue || loading} 
+                        disabled={!valideValue || loading}
                         className={`${valideValue && !loading ? "bg-green-800 hover:bg-green-700" : "bg-gray-500"} text-white py-2 rounded font-semibold my-3 tracking-wide`}
                     >
                         {loading ? 'Signing In...' : 'Login'}
