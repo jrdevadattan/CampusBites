@@ -12,8 +12,14 @@ const auth = async (request, response, next) => {
             })
         }
 
-        // FIXED: Check if environment variable exists, fallback to hardcoded
-        const SECRET = process.env.SECRET_KEY_ACCESS_TOKEN || 'CampusBites_AccessToken_SecretKey_2024_Development'
+        const SECRET = process.env.SECRET_KEY_ACCESS_TOKEN;
+        if (!SECRET) {
+            return response.status(500).json({
+                message: "Server misconfiguration: SECRET_KEY_ACCESS_TOKEN environment variable is not set.",
+                error: true,
+                success: false
+            });
+        }
 
         const decode = jwt.verify(token, SECRET)
 

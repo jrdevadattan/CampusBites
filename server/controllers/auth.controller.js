@@ -193,10 +193,15 @@ export async function loginController(request, response) {
             })
         }
 
-        const SECRET = process.env.SECRET_KEY_ACCESS_TOKEN || 'CampusBites_AccessToken_SecretKey_2024_Development'
-        const REFRESH_SECRET = process.env.SECRET_KEY_REFRESH_TOKEN || 'CampusBites_RefreshToken_SecretKey_2024_Development'
         
-        const token = await jwt.sign(
+        const SECRET = process.env.SECRET_KEY_ACCESS_TOKEN;
+        const REFRESH_SECRET = process.env.SECRET_KEY_REFRESH_TOKEN;
+        if (!SECRET || !REFRESH_SECRET) {
+            throw new Error('Missing required environment variables: SECRET_KEY_ACCESS_TOKEN and/or SECRET_KEY_REFRESH_TOKEN');
+        }
+        
+        
+        const token = jwt.sign(
             { 
                 id: user._id,
                 email: user.email 
@@ -205,7 +210,8 @@ export async function loginController(request, response) {
             { expiresIn: '8h' }
         )
 
-        const refreshToken = await jwt.sign(
+        
+        const refreshToken = jwt.sign(
             { 
                 id: user._id,
                 email: user.email 
@@ -581,7 +587,8 @@ export async function refreshToken(request, response) {
             })
         }
 
-        const verifyToken = await jwt.verify(refreshToken, process.env.SECRET_KEY_REFRESH_TOKEN)
+        
+        const verifyToken = jwt.verify(refreshToken, process.env.SECRET_KEY_REFRESH_TOKEN)
 
         if (!verifyToken) {
             return response.status(401).json({
@@ -591,7 +598,8 @@ export async function refreshToken(request, response) {
             })
         }
 
-        const userId = verifyToken?._id
+        
+        const userId = verifyToken?.id
 
         const newAccessToken = await generatedAccessToken(userId)
 

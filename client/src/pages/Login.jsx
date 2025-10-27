@@ -58,7 +58,7 @@ const Login = () => {
             }
 
         } catch (error) {
-            if (error.response?.data?.emailVerified === false) {
+            if (error.response?.data?.email_verify === false) {
                 toast.error(error.response.data.message)
                 localStorage.setItem('verificationEmail', data.email)
                 navigate('/verify-email', {
