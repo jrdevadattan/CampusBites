@@ -74,7 +74,6 @@ const ProductCardAdmin = ({ data, fetchProductData }) => {
             />
         </div>
   <p className='text-ellipsis line-clamp-2 font-medium dark:text-white'>{data?.name}</p>
-  <p className='text-slate-400'>{data?.unit}</p>
   <p className='text-xs mt-1 text-blue-600 dark:text-blue-300'>Stock left: <span className={data?.stock === 0 ? 'text-red-500 dark:text-red-400 font-semibold' : ''}>{data?.stock}</span></p>
         
         {/* Stock Management */}

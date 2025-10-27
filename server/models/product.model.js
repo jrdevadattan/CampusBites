@@ -20,10 +20,6 @@ const productSchema = new mongoose.Schema({
             ref : 'subCategory'
         }
     ],
-    unit : {
-        type : String,
-        default : ""
-    },
     stock : {
         type : Number,
         default : null

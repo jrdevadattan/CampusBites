@@ -7,7 +7,6 @@ export const createProductController = async(request,response)=>{
             image = [],
             category = [],
             subCategory = [],
-            unit,
             stock,
             price,
             discount,
@@ -40,9 +39,6 @@ export const createProductController = async(request,response)=>{
         if(!subCategoryIds[0]){
             return response.status(400).json({ message: "Select at least one subcategory", error: true, success: false })
         }
-        if(!unit){
-            return response.status(400).json({ message: "Unit is required", error: true, success: false })
-        }
         if(priceNum === null || Number.isNaN(priceNum)){
             return response.status(400).json({ message: "Valid price is required", error: true, success: false })
         }
@@ -55,7 +51,6 @@ export const createProductController = async(request,response)=>{
             image,
             category: categoryIds,
             subCategory: subCategoryIds,
-            unit,
             stock: stockNum,
             price: priceNum,
             discount: discountNum,

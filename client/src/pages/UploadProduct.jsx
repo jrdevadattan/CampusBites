@@ -19,7 +19,6 @@ const UploadProduct = () => {
       image : [],
       category : [],
       subCategory : [],
-      unit : "",
       stock : "",
       price : "",
       discount : "",
@@ -155,7 +154,6 @@ const UploadProduct = () => {
             image : [],
             category : [],
             subCategory : [],
-            unit : "",
             stock : "",
             price : "",
             discount : "",
@@ -344,20 +342,6 @@ const UploadProduct = () => {
                       }
                     </div>
                   </div>
-                </div>
-
-                <div className='grid gap-1'>
-                  <label htmlFor='unit' className='font-medium dark:text-white'>Unit</label>
-                  <input 
-                    id='unit'
-                    type='text'
-                    placeholder='Enter product unit'
-                    name='unit'
-                    value={data.unit}
-                    onChange={handleChange}
-                    required
-                    className='bg-blue-50 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-400 p-2 outline-none border dark:border-neutral-700 focus-within:border-primary-200 dark:focus-within:border-primary-200 rounded'
-                  />
                 </div>
 
                 <div className='grid gap-1'>

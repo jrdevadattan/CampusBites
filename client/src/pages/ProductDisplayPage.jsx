@@ -107,10 +107,6 @@ const ProductDisplayPage = () => {
                     <p className='font-semibold'>Description</p>
                     <p className='text-base'>{data.description}</p>
                 </div>
-                <div>
-                    <p className='font-semibold'>Unit</p>
-                    <p className='text-base'>{data.unit}</p>
-                </div>
                 {
                   data?.more_details && Object.keys(data?.more_details).map((element,index)=>{
                     return(
@@ -127,7 +123,6 @@ const ProductDisplayPage = () => {
 
         <div className='p-4 lg:pl-7 text-base lg:text-lg'>
             <h2 className='text-lg font-semibold lg:text-3xl'>{data.name}</h2>  
-            <p className=''>{data.unit}</p> 
             <Divider/>
             <div>
               <p className='text-neutral-600 dark:text-neutral-400 mb-2'>Price</p> 
@@ -196,10 +191,6 @@ const ProductDisplayPage = () => {
                 <div>
                     <p className='font-semibold'>Description</p>
                     <p className='text-base'>{data.description}</p>
-                </div>
-                <div>
-                    <p className='font-semibold'>Unit</p>
-                    <p className='text-base'>{data.unit}</p>
                 </div>
                 {
                   data?.more_details && Object.keys(data?.more_details).map((element,index)=>{

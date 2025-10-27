@@ -20,7 +20,6 @@ const EditProductAdmin = ({ close ,data : propsData,fetchProductData}) => {
     image: propsData.image,
     category: propsData.category,
     subCategory: propsData.subCategory,
-    unit: propsData.unit,
     stock: propsData.stock,
     price: propsData.price,
     discount: propsData.discount,
@@ -149,7 +148,6 @@ const EditProductAdmin = ({ close ,data : propsData,fetchProductData}) => {
           image: [],
           category: [],
           subCategory: [],
-          unit: "",
           stock: "",
           price: "",
           discount: "",
@@ -338,20 +336,6 @@ const EditProductAdmin = ({ close ,data : propsData,fetchProductData}) => {
                     }
                   </div>
                 </div>
-              </div>
-
-              <div className='grid gap-1'>
-                <label htmlFor='unit' className='font-medium'>Unit</label>
-                <input
-                  id='unit'
-                  type='text'
-                  placeholder='Enter product unit'
-                  name='unit'
-                  value={data.unit}
-                  onChange={handleChange}
-                  required
-                  className='bg-blue-50 p-2 outline-none border focus-within:border-primary-200 rounded'
-                />
               </div>
 
               <div className='grid gap-1'>
