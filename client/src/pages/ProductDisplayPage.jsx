@@ -54,7 +54,7 @@ const ProductDisplayPage = () => {
   const handleScrollLeft = ()=>{
     imageContainer.current.scrollLeft -= 100
   }
-  console.log("product data",data)
+
   return (
     <section className='container mx-auto p-4 grid lg:grid-cols-2 dark:text-white'>
         <div className=''>
@@ -130,20 +130,23 @@ const ProductDisplayPage = () => {
             <p className=''>{data.unit}</p> 
             <Divider/>
             <div>
-              <p className=''>Price</p> 
-              <div className='flex items-center gap-2 lg:gap-4'>
-                <div className='border border-green-600 dark:border-green-500 px-4 py-2 rounded bg-green-50 dark:bg-green-900/20 w-fit'>
-                    <p className='font-semibold text-lg lg:text-xl text-green-700 dark:text-green-400'>{DisplayPriceInRupees(pricewithDiscount(data.price,data.discount))}</p>
+              <p className='text-neutral-600 dark:text-neutral-400 mb-2'>Price</p> 
+              <div className='flex items-center gap-2 lg:gap-4 flex-wrap'>
+                <div className='border-2 border-green-600 dark:border-green-500 px-4 py-2 rounded-lg bg-green-50 dark:bg-green-900/20 w-fit'>
+                    <p className='font-bold text-xl lg:text-2xl text-green-700 dark:text-green-400'>{DisplayPriceInRupees(pricewithDiscount(data.price,data.discount))}</p>
                 </div>
                 {
-                  data.discount && (
-                    <p className='line-through'>{DisplayPriceInRupees(data.price)}</p>
-                  )
-                }
-                {
-                  data.discount && (
-                    <p className="font-bold text-green-700 dark:text-green-400 lg:text-2xl">{data.discount}% <span className='text-base text-green-700 dark:text-green-400'>Discount</span></p>
-                  )
+                  data.discount ? (
+                    <>
+                      <div className='flex flex-col gap-1'>
+                        <p className='line-through text-neutral-500 dark:text-neutral-400 text-lg'>{DisplayPriceInRupees(data.price)}</p>
+                        <p className="font-bold text-green-700 dark:text-green-400 text-base lg:text-lg">
+                          Save {data.discount}% 
+                          <span className='text-sm ml-1'>({DisplayPriceInRupees(data.price - pricewithDiscount(data.price, data.discount))} OFF)</span>
+                        </p>
+                      </div>
+                    </>
+                  ) : null
                 }
               </div>
 

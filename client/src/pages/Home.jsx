@@ -13,7 +13,6 @@ const Home = () => {
   const navigate = useNavigate()
 
   const handleRedirectProductListpage = (id,cat)=>{
-      console.log(id,cat)
       const subcategory = subCategoryData.find(sub =>{
         const filterData = sub.category.some(c => {
           return c._id == id
@@ -24,7 +23,6 @@ const Home = () => {
       const url = `/${valideURLConvert(cat)}-${id}/${valideURLConvert(subcategory.name)}-${subcategory._id}`
 
       navigate(url)
-      console.log(url)
   }
 
 

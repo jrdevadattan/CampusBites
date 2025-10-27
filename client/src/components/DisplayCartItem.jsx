@@ -63,7 +63,14 @@ const DisplayCartItem = ({close}) => {
                                                         <div className='w-full max-w-sm text-xs'>
                                                             <p className='text-xs text-ellipsis line-clamp-2'>{item?.productId?.name}</p>
                                                             <p className='text-neutral-400'>{item?.productId?.unit}</p>
-                                                            <p className='font-semibold'>{DisplayPriceInRupees(pricewithDiscount(item?.productId?.price,item?.productId?.discount))}</p>
+                                                            <div className='flex items-center gap-2'>
+                                                                <p className='font-semibold'>{DisplayPriceInRupees(pricewithDiscount(item?.productId?.price,item?.productId?.discount))}</p>
+                                                                {
+                                                                    item?.productId?.discount > 0 && (
+                                                                        <p className='text-neutral-400 line-through text-xs'>{DisplayPriceInRupees(item?.productId?.price)}</p>
+                                                                    )
+                                                                }
+                                                            </div>
                                                         </div>
                                                         <div>
                                                             <AddToCartButton data={item?.productId}/>
