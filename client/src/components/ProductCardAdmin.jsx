@@ -74,7 +74,13 @@ const ProductCardAdmin = ({ data, fetchProductData }) => {
             />
         </div>
   <p className='text-ellipsis line-clamp-2 font-medium dark:text-white'>{data?.name}</p>
-  <p className='text-xs mt-1 text-blue-600 dark:text-blue-300'>Stock left: <span className={data?.stock === 0 ? 'text-red-500 dark:text-red-400 font-semibold' : ''}>{data?.stock}</span></p>
+  <p className='text-xs mt-1'>Stock left: <span className={`font-semibold ${
+    data?.stock === 0 
+      ? 'text-red-500 dark:text-red-400' 
+      : data?.stock > 5 
+        ? 'text-green-600 dark:text-green-400' 
+        : 'text-orange-600 dark:text-orange-400'
+  }`}>{data?.stock}</span></p>
         
         {/* Stock Management */}
         <div className='flex items-center gap-1 my-2 bg-slate-100 dark:bg-neutral-800 p-1 rounded'>

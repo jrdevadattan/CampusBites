@@ -33,8 +33,14 @@ const CardProduct = ({data}) => {
       <div className='px-2 lg:px-0 font-medium text-ellipsis text-sm lg:text-base line-clamp-2 dark:text-white'>
         {data.name}
       </div>
-      <div className='px-2 lg:px-0 text-xs lg:text-sm dark:text-neutral-400'>
-        {data.stock > 0 ? `${data.stock} stocks left` : 'Out of stock'}
+      <div className={`px-2 lg:px-0 text-xs lg:text-sm ${
+        data.stock === 0 
+          ? 'text-red-500 dark:text-red-400' 
+          : data.stock > 5 
+            ? 'text-green-600 dark:text-green-400' 
+            : 'text-orange-600 dark:text-orange-400'
+      }`}>
+        {data.stock > 0 ? `${data.stock} stocks left` : '0 stock'}
       </div>
 
       <div className='px-2 lg:px-0 flex items-center justify-between gap-2 text-sm lg:text-base'>

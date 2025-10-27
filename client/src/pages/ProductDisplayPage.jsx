@@ -154,8 +154,17 @@ const ProductDisplayPage = () => {
                 data.stock === 0 ? (
                   <p className='text-lg font-semibold text-red-500 dark:text-red-400'>Out of Stock</p>
                 ) : (
-                  <p className='text-base font-medium text-green-600 dark:text-green-400'>
+                  <p className={`text-base font-medium ${
+                    data.stock > 5 
+                      ? 'text-green-600 dark:text-green-400' 
+                      : 'text-orange-600 dark:text-orange-400'
+                  }`}>
                     {data.stock} {data.stock === 1 ? 'item' : 'items'} left in stock
+                    {data.stock <= 5 && data.stock > 0 && (
+                      <span className='ml-2 text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full'>
+                        Low Stock
+                      </span>
+                    )}
                   </p>
                 )
               }
