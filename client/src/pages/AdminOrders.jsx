@@ -145,6 +145,11 @@ const AdminOrders = () => {
                     <td className='p-2 border-b dark:border-neutral-700'>
                       <div className='font-medium dark:text-white whitespace-nowrap'>{customer.name || '—'}</div>
                       <div className='text-xs text-neutral-500 dark:text-neutral-400 whitespace-nowrap'>{addr.hostelName || '—'}, {addr.roomNumber || '—'}</div>
+                      <div className='text-xs text-neutral-500 dark:text-neutral-400 mt-1 whitespace-nowrap'>
+                        <a href={`tel:${customer.mobile || addr.mobile || ''}`} className='hover:underline'>{customer.mobile || addr.mobile || '—'}</a>
+                        <span className='mx-2'>|</span>
+                        <a href={`mailto:${customer.email || ''}`} className='hover:underline'>{customer.email || '—'}</a>
+                      </div>
                     </td>
                     <td className='p-2 border-b dark:border-neutral-700 dark:text-neutral-200 max-w-[150px] truncate'>{prod.name || '—'}</td>
                     <td className='p-2 border-b dark:border-neutral-700 dark:text-neutral-200 text-right'>{Number(o.quantity || 1)}</td>
@@ -219,6 +224,7 @@ const AdminOrders = () => {
               <div className='flex flex-col gap-1 text-xs dark:text-neutral-200'>
                 <span>Customer: <span className='font-medium'>{customer.name || '—'}</span></span>
                 <span>Contact: <span className='font-medium'>{customer.mobile || addr.mobile || '—'}</span></span>
+                <span>Email: <span className='font-medium'>{customer.email || '—'}</span></span>
                 <span>Location: <span className='font-medium'>{addr.hostelName || '—'}, Room {addr.roomNumber || '—'}</span></span>
               </div>
               {o.cancelled && o.cancelReason && (
